@@ -2,8 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import LockIcon from "./assets/LockIcon";
-import { LockIconType } from "./enums/enums";
+import Input from "./UI/Input";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,7 +22,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <LockIcon type={LockIconType.unlocked} />
+        <Input ingredientName="Ciasto"/>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
