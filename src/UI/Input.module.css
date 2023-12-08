@@ -1,16 +1,41 @@
-.inputTopWrapper{
+.inputTopWrapper {
+   padding: 16px;
 }
 
-.inputWrapper{
-    background-color: black;
-    display: flex;
+.titleStyle {
+}
+
+.inputWrapper {
+   background-color: var(--color-gray-background);
+   display: flex;
+   border-radius: 4px;
+   border: 1px solid;
 
 }
 
-.iconWrapper{
-
+.lockedStyle {
+   border-color: transparent;
 }
 
-.inputStyle{
+.unlockedStyle {
+   border-color: var(--color-gray);
+}
 
+.iconWrapper {
+   padding: 8px;
+}
+
+.inputStyle {
+   color: var(--color-dark-green);
+   background: transparent;
+   border: none;
+   resize: none;
+   overflow: hidden;
+   width: 100%;
+   height: auto;
+   padding: 16px;
+}
+
+.inputStyle:focus-visible {
+   outline: none;
 }
