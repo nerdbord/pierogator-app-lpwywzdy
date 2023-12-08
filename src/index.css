@@ -1,68 +1,56 @@
 :root {
-   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-   line-height: 1.5;
-   font-weight: 400;
+   /* colors */
+   --color-light-cake: #ffe5b2;
+   --color-dark-cake: #face90;
 
-   color-scheme: light dark;
-   color: rgba(255, 255, 255, 0.87);
-   background-color: #242424;
+   --color-green: #004b03;
+   --color-dark-green: #002902;
 
-   font-synthesis: none;
-   text-rendering: optimizeLegibility;
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
-}
+   --color-gray: #d6d6d6;
+   --color-gray-light: #e8e8e8;
+   --color-gray-dark: #969696;
 
-a {
-   font-weight: 500;
-   color: #646cff;
-   text-decoration: inherit;
-}
-a:hover {
-   color: #535bf2;
+   --color-gray-background: #f9f9f9;
+
+   --color-white: #ffffff;
 }
 
 body {
-   margin: 0;
-   display: flex;
-   place-items: center;
-   min-width: 320px;
-   min-height: 100vh;
+   font-family: Poppins;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 20px;
+   letter-spacing: 0;
 }
 
 h1 {
-   font-size: 3.2em;
-   line-height: 1.1;
+   font-family: Barrio;
+   font-weight: 400;
+   font-size: 42px;
+   line-height: 34px;
+   letter-spacing: 0;
+}
+
+h2 {
+   font-family: Barriecito;
+   font-weight: 400;
+   font-size: 30px;
+   line-height: 24px;
+   letter-spacing: 0;
+}
+
+h3 {
+   font-family: Poppins;
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 16px;
+   letter-spacing: 0;
 }
 
 button {
-   border-radius: 8px;
-   border: 1px solid transparent;
-   padding: 0.6em 1.2em;
-   font-size: 1em;
-   font-weight: 500;
-   font-family: inherit;
-   background-color: #1a1a1a;
-   cursor: pointer;
-   transition: border-color 0.25s;
-}
-button:hover {
-   border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-   :root {
-      color: #213547;
-      background-color: #ffffff;
-   }
-   a:hover {
-      color: #747bff;
-   }
-   button {
-      background-color: #f9f9f9;
-   }
+   font-family: Poppins;
+   font-weight: 5 00;
+   font-size: 14px;
+   line-height: 16px;
+   letter-spacing: 0;
 }
