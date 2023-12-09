@@ -3,6 +3,7 @@
    padding: 16px 12px;
    color: var(--color-white);
    background-color: var(--color-dark-green);
+   border: none;
 }
 
 .buttonSecondary {
@@ -10,6 +11,7 @@
    padding: 10px 12px;
    color: var(--color-dark-green);
    background-color: var(--color-white);
+   border: 1px solid var(--color-gray);
 }
 
 .buttonPrimary:hover {
