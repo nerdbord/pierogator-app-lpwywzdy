@@ -5,7 +5,7 @@ const App = () => {
    return (
       <div className={styles.mainWrapper}>
          <h1>Pierogator świąteczny</h1>
-         <Input ingredientName="Ciasto" />
+         <Input ingredientName="Ciasto" placeholder='test' />
       </div>
    );
 };

@@ -6,12 +6,11 @@ import classNames from 'classnames';
 
 interface InputProps {
    ingredientName: string;
+   placeholder: string;
 }
 
 const Input = (props: InputProps) => {
    const [textareaValue, setTextareaValue] = useState<string>('');
-   //initial textarea height is 40px as per figma file
-   const [textareaHeight, setTextareaHeight] = useState<number>(40);
    const [locked, setLocked] = useState(false);
 
    const handleLock = () => {
@@ -24,8 +23,14 @@ const Input = (props: InputProps) => {
    );
 
    const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTextareaValue(event.target.value);
-    setTextareaHeight(event.target.scrollHeight > textareaHeight ? event.target.scrollHeight : textareaHeight)
+      const target = event.target as HTMLTextAreaElement;
+      setTextareaValue(target.value);
+      target.style.height = '0px';
+      target.style.height = target.scrollHeight + 'px';
+   };
+
+   const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+      textareaValue === '' && setTextareaValue(props.placeholder);
    };
 
    return (
@@ -36,11 +41,12 @@ const Input = (props: InputProps) => {
                <LockIcon type={locked ? LockIconType.locked : LockIconType.unlocked} />
             </div>
             <textarea
-               rows={1}
                onChange={handleInput}
+               onFocus={handleFocus}
                className={styles.inputStyle}
                disabled={locked}
                value={textareaValue}
+               placeholder={props.placeholder}
             />
          </div>
       </div>

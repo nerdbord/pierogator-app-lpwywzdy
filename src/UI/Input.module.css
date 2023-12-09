@@ -32,10 +32,15 @@
    resize: none;
    overflow: hidden;
    width: 100%;
-   height: auto;
+   height: 40px;
    padding: 16px;
+   padding-bottom: 0px;
 }
 
 .inputStyle:focus-visible {
    outline: none;
+}
+
+.inputStyle::placeholder{
+    color: var(--color-gray-dark);
 }
