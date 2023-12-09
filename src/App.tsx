@@ -1,5 +1,5 @@
 // styles
-import './App.module.css';
+import styles from './App.module.css';
 
 // components
 import IngredientsForm from './components/IngredientsForm';
