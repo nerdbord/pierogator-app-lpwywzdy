@@ -1,0 +1,10 @@
+.header {
+    width: 100%;
+}
+
+svg {
+    width: 100%;
+    height: auto;
+    display: block; 
+    margin-bottom: 40px;
+}
