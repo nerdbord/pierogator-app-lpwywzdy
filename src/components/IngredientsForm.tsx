@@ -24,9 +24,15 @@ const IngredientsForm = () => {
          </div>
 
          <section>
-            <Input></Input>
-            <Input></Input>
-            <Input></Input>
+            <Input ingredientName="Ciasto" placeholder="wpisz, wygeneruj lub zostaw puste"></Input>
+            <Input
+               ingredientName="Nadzienie"
+               placeholder="wpisz, wygeneruj lub zostaw puste"
+            ></Input>
+            <Input
+               ingredientName="Składniki"
+               placeholder="wpisz, wygeneruj lub zostaw puste"
+            ></Input>
          </section>
       </form>
    );
