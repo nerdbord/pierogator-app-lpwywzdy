@@ -1,0 +1,23 @@
+.buttonPrimary {
+   font-weight: 600;
+   padding: 16px 12px;
+   color: var(--color-white);
+   background-color: var(--color-dark-green);
+   border: none;
+}
+
+.buttonSecondary {
+   font-weight: 500;
+   padding: 10px 12px;
+   color: var(--color-dark-green);
+   background-color: var(--color-white);
+   border: 1px solid var(--color-gray);
+}
+
+.buttonPrimary:hover {
+   background-color: var(--color-green);
+}
+
+.buttonSecondary:hover {
+   background-color: var(--color-gray-light);
+}
