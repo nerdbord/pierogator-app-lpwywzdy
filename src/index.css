@@ -13,6 +13,9 @@
    --color-gray-background: #f9f9f9;
 
    --color-white: #ffffff;
+
+   /* effects */
+   --radius-button: 4px;
 }
 
 body {
@@ -49,8 +52,9 @@ h3 {
 
 button {
    font-family: Poppins;
-   font-weight: 5 00;
    font-size: 14px;
    line-height: 16px;
    letter-spacing: 0;
+   border-radius: var(--radius-button);
+   cursor: pointer;
 }
