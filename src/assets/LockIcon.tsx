@@ -18,7 +18,7 @@ const LockIcon = (props: LockIconProps) => {
         <path
           d="M20.75 16.25V12.5158C20.75 10.5138 19.127 8.89081 17.125 8.89081H17.0092C15.0711 8.89081 13.4109 10.4594 13.25 12.3908V12.3908"
           stroke="#002902"
-          stroke-linecap="round"
+          strokeLinecap="round"
         />
         <rect
           x="11.75"
@@ -27,8 +27,8 @@ const LockIcon = (props: LockIconProps) => {
           height="7.5"
           rx="1"
           stroke="#002902"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     );
@@ -49,14 +49,14 @@ const LockIcon = (props: LockIconProps) => {
           height="7.5"
           rx="1"
           stroke="#002902"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M13.25 14C13.25 11.9289 14.9289 10.25 17 10.25V10.25C19.0711 10.25 20.75 11.9289 20.75 14V16.25H13.25V14Z"
           stroke="#002902"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     );
