@@ -1,9 +1,11 @@
-import { IngredType } from "../enums/enums";
+import { IngredType } from '../enums/enums';
+
+const apiToken = import.meta.env.VITE_API_TOKEN;
 
 export const generateAIText = async (ingredient: IngredType) => {
    const url = 'https://training.nerdbord.io/api/v1/openai/chat/completions';
    const headers = {
-      Authorization: 'secret-token',
+      Authorization: apiToken,
       'Content-Type': 'application/json',
    };
 

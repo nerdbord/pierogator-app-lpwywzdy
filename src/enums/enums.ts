@@ -1,6 +1,6 @@
-export enum LockIconType{
-    locked = "locked",
-    unlocked = "unlocked"
+export enum LockIconType {
+   locked = 'locked',
+   unlocked = 'unlocked',
 }
 
 export enum ButtonType {
@@ -9,7 +9,7 @@ export enum ButtonType {
 }
 
 export enum IngredType {
-    ciasto = 'Ciasto',
-    nadzienie = 'Nadzienie',
-    skladniki = 'Składniki'
+   ciasto = 'Ciasto',
+   nadzienie = 'Nadzienie',
+   skladniki = 'Składniki',
 }
