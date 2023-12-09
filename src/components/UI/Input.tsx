@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import LockIcon from '../../assets/LockIcon';
 import { IngredType, LockIconType } from '../../enums/enums';
 import styles from './Input.module.css';
