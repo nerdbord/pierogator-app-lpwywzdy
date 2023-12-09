@@ -1,36 +1,31 @@
-import { useState } from 'react';
 import LockIcon from '../icons/LockIcon';
-import { LockIconType } from '../../enums/enums';
+import { IngredType, LockIconType } from '../../enums/enums';
 import styles from './Input.module.css';
 import classNames from 'classnames';
 
 interface InputProps {
-   ingredientName: string;
-   placeholder: string;
+   ingredientName: IngredType;
+   displayValue: string;
+   isLocked: boolean;
+   setLocked: React.Dispatch<React.SetStateAction<boolean>>;
+   handleInput: (event: React.ChangeEvent<HTMLTextAreaElement>, ingredientName: IngredType) => void;
 }
 
 const Input = (props: InputProps) => {
-   const [textareaValue, setTextareaValue] = useState<string>('');
-   const [locked, setLocked] = useState(false);
-
    const handleLock = () => {
-      setLocked((prev) => !prev);
+      props.setLocked((prev) => !prev);
    };
 
    const inputWrapperStyle = classNames(
       styles.inputWrapper,
-      locked ? styles.lockedStyle : styles.unlockedStyle,
+      props.isLocked ? styles.lockedStyle : styles.unlockedStyle,
    );
 
-   const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+   const localHandleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      props.handleInput(event, props.ingredientName);
       const target = event.target as HTMLTextAreaElement;
-      setTextareaValue(target.value);
       target.style.height = '0px';
       target.style.height = target.scrollHeight + 'px';
-   };
-
-   const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      textareaValue === '' && setTextareaValue(props.placeholder);
    };
 
    return (
@@ -38,15 +33,14 @@ const Input = (props: InputProps) => {
          <h3 className={styles.titleStyle}>{props.ingredientName}</h3>
          <div className={inputWrapperStyle}>
             <div className={styles.iconWrapper} onClick={handleLock}>
-               <LockIcon type={locked ? LockIconType.locked : LockIconType.unlocked} />
+               <LockIcon type={props.isLocked ? LockIconType.locked : LockIconType.unlocked} />
             </div>
             <textarea
-               onChange={handleInput}
-               onFocus={handleFocus}
+               onChange={localHandleInput}
                className={styles.inputStyle}
-               disabled={locked}
-               value={textareaValue}
-               placeholder={props.placeholder}
+               disabled={props.isLocked}
+               value={props.displayValue}
+               placeholder={'wpisz, wygeneruj lub zostaw puste'}
             />
          </div>
       </div>
