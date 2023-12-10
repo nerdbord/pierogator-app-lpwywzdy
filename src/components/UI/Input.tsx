@@ -17,7 +17,7 @@ const Input = (props: InputProps) => {
    const inputRef = useRef<HTMLTextAreaElement>(null);
 
    useLayoutEffect(() => {
-      if (hasMounted && inputRef) {
+      if (hasMounted && inputRef.current) {
          inputRef.current.style.height = 'auto'; // Reset the height to auto
          inputRef.current.style.height = inputRef.current.scrollHeight + 'px'; // Set the height based on the content
       } else {
