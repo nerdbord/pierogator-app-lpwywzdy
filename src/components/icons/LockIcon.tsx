@@ -1,4 +1,4 @@
-import { LockIconType } from '../enums/enums';
+import { LockIconType } from '../../enums/enums';
 
 interface LockIconProps {
    type: LockIconType;

@@ -1,4 +1,5 @@
-import LockIcon from '../../assets/LockIcon';
+import { useLayoutEffect, useRef, useState } from 'react';
+import LockIcon from '../icons/LockIcon';
 import { IngredType, LockIconType } from '../../enums/enums';
 import styles from './Input.module.css';
 import classNames from 'classnames';
@@ -12,6 +13,19 @@ interface InputProps {
 }
 
 const Input = (props: InputProps) => {
+   const [hasMounted, setHasMounted] = useState(false);
+   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+   useLayoutEffect(() => {
+      if (hasMounted && inputRef) {
+         inputRef.current.style.height = 'auto'; // Reset the height to auto
+         inputRef.current.style.height = inputRef.current.scrollHeight + 'px'; // Set the height based on the content
+      } else {
+         // Mark the component as mounted after the first render
+         setHasMounted(true);
+      }
+   }, [props.displayValue, hasMounted]);
+
    const handleLock = () => {
       props.setLocked((prev) => !prev);
    };
@@ -23,9 +37,6 @@ const Input = (props: InputProps) => {
 
    const localHandleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       props.handleInput(event, props.ingredientName);
-      const target = event.target as HTMLTextAreaElement;
-      target.style.height = '0px';
-      target.style.height = target.scrollHeight + 'px';
    };
 
    return (
@@ -36,6 +47,8 @@ const Input = (props: InputProps) => {
                <LockIcon type={props.isLocked ? LockIconType.locked : LockIconType.unlocked} />
             </div>
             <textarea
+               rows={1}
+               ref={inputRef}
                onChange={localHandleInput}
                className={styles.inputStyle}
                disabled={props.isLocked}
