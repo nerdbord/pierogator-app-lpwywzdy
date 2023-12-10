@@ -6,6 +6,8 @@ import { generateAIText } from './api/client';
 // components
 import Button from './components/UI/Button';
 import Input from './components/UI/Input';
+import DumplingIcon from './components/icons/DumplingIcon';
+import Loader from './components/UI/Loader';
 
 const App = () => {
    const [doughValue, setDoughValue] = useState('');
@@ -63,31 +65,42 @@ const App = () => {
    return (
       <div className={styles.mainWrapper}>
          <h1>Pierogator świąteczny</h1>
-         <Button type={ButtonType.Primary}>Zapisz i przejdź do tworzenia przepisu</Button>
-         <Button type={ButtonType.Secondary} onClick={handleGenerate}>
-            Generuj
-         </Button>
-         <Input
-            ingredientName={IngredType.ciasto}
-            displayValue={doughValue}
-            isLocked={doughLocked}
-            setLocked={setDoughLocked}
-            handleInput={handleInput}
-         />
-         <Input
-            ingredientName={IngredType.nadzienie}
-            displayValue={fillingValue}
-            isLocked={fillingLocked}
-            setLocked={setFillingLocked}
-            handleInput={handleInput}
-         />
-         <Input
-            ingredientName={IngredType.skladniki}
-            displayValue={ingredsValue}
-            isLocked={ingredsLocked}
-            setLocked={setIngredsLocked}
-            handleInput={handleInput}
-         />
+         <div className={styles.form}>
+            <div className={styles.formHeader}>
+               <h2>
+                  <DumplingIcon /> Składniki
+               </h2>
+               <div className={styles.formHeaderButtonSection}>
+                  <Loader />
+                  <Button type={ButtonType.Secondary} onClick={handleGenerate}>
+                     Generuj
+                  </Button>
+               </div>
+            </div>
+            <section>
+               <Input
+                  ingredientName={IngredType.ciasto}
+                  displayValue={doughValue}
+                  isLocked={doughLocked}
+                  setLocked={setDoughLocked}
+                  handleInput={handleInput}
+               />
+               <Input
+                  ingredientName={IngredType.nadzienie}
+                  displayValue={fillingValue}
+                  isLocked={fillingLocked}
+                  setLocked={setFillingLocked}
+                  handleInput={handleInput}
+               />
+               <Input
+                  ingredientName={IngredType.skladniki}
+                  displayValue={ingredsValue}
+                  isLocked={ingredsLocked}
+                  setLocked={setIngredsLocked}
+                  handleInput={handleInput}
+               />
+            </section>
+         </div>
       </div>
    );
 };
