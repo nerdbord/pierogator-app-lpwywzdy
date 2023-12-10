@@ -4,6 +4,7 @@
    color: var(--color-white);
    background-color: var(--color-dark-green);
    border: none;
+   width: 100%;
 }
 
 .buttonSecondary {
@@ -14,10 +15,21 @@
    border: 1px solid var(--color-gray);
 }
 
+
 .buttonPrimary:hover {
    background-color: var(--color-green);
 }
 
+.buttonPrimary:disabled{
+   cursor: wait;
+   background-color: var(--color-dark-green);
+}
+
 .buttonSecondary:hover {
    background-color: var(--color-gray-light);
+}
+
+.buttonSecondary:disabled{
+   cursor: wait;
+   background-color: var(--color-white);
 }

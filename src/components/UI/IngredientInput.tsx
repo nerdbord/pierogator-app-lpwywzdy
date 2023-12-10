@@ -12,12 +12,12 @@ interface InputProps {
    handleInput: (event: React.ChangeEvent<HTMLTextAreaElement>, ingredientName: IngredType) => void;
 }
 
-const Input = (props: InputProps) => {
+const IngredientInput = (props: InputProps) => {
    const [hasMounted, setHasMounted] = useState(false);
    const inputRef = useRef<HTMLTextAreaElement>(null);
 
    useLayoutEffect(() => {
-      if (hasMounted && inputRef) {
+      if (hasMounted && inputRef.current) {
          inputRef.current.style.height = 'auto'; // Reset the height to auto
          inputRef.current.style.height = inputRef.current.scrollHeight + 'px'; // Set the height based on the content
       } else {
@@ -60,4 +60,4 @@ const Input = (props: InputProps) => {
    );
 };
 
-export default Input;
+export default IngredientInput;
