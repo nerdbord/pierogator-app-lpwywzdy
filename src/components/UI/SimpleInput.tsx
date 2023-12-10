@@ -1,6 +1,3 @@
-import { useLayoutEffect, useRef, useState } from 'react';
-import LockIcon from '../icons/LockIcon';
-import { IngredType, LockIconType } from '../../enums/enums';
 import styles from './Input.module.css';
 import classNames from 'classnames';
 
