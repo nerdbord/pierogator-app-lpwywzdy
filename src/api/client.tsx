@@ -1,8 +1,8 @@
 import { IngredType } from '../enums/enums';
 import { ingredientsMessagesHelper } from './clientHelpers';
 
-const openAIapiToken = import.meta.env.VITE_API_TOKEN;
-const nerdyApiToken = import.meta.env.NERDY_API_TOKEN;
+const openAIapiToken = import.meta.env.VITE_GPT_TOKEN;
+const nerdyApiToken = import.meta.env.VITE_NERDY_TOKEN;
 
 export const generateAIText = async (ingredient: IngredType) => {
    const url = 'https://training.nerdbord.io/api/v1/openai/chat/completions';
@@ -84,4 +84,28 @@ export const getAllPierogi = async () => {
       .catch((error) => {
          console.error('Error fetching data:', error);
       });
+};
+
+export const getMyPierogi = async () => {
+   const url = 'https://training.nerdbord.io/api/v1/pierogator/dumpling-recipes/me';
+
+   try {
+      const response = await fetch(url, {
+         method: 'GET',
+         headers: {
+            Authorization: nerdyApiToken,
+            'Content-Type': 'application/json',
+         },
+      });
+
+      if (!response.ok) {
+         throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+   } catch (error) {
+      console.error('Error fetching dumpling recipe:', error);
+      throw error;
+   }
 };
