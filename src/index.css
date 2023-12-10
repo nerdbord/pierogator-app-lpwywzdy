@@ -32,6 +32,12 @@ body {
    letter-spacing: 0;
 }
 
+#root {
+   display: flex;
+   justify-content: center;
+   min-height: 100vh;
+}
+
 h1 {
    font-family: Barrio;
    font-weight: 400;

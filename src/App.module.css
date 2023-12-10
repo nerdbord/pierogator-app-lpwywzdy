@@ -1,10 +1,11 @@
 .mainWrapper {
    max-width: 375px;
    border: 1px salmon solid;
+   padding-inline: 16px;
 }
 
 .form {
-   padding: 18px 18px 32px;
+   padding: 18px 0 32px;
 }
 
 .formHeader {
