@@ -17,6 +17,9 @@ const App = () => {
    const [ingredsValue, setIngredsValue] = useState('');
    const [ingredsLocked, setIngredsLocked] = useState(false);
 
+   // loader states
+   const [isGenerating, setIsGenerating] = useState('');
+
    const ingredTypes = Object.values(IngredType);
 
    const setValueHelper = (ingredient: IngredType, newValue: string) => {
@@ -49,11 +52,14 @@ const App = () => {
    };
 
    const handleGenerate = async () => {
+      setIsGenerating('ingredients');
+
       ingredTypes.forEach(async (ingredient) => {
          if (getBooleanHelper(ingredient)) return;
          const apiResponse = await generateAIText(ingredient);
          const newValue = apiResponse.choices[0].message.content;
          setValueHelper(ingredient, newValue);
+         setIsGenerating('');
       });
    };
 
@@ -71,7 +77,7 @@ const App = () => {
                   <DumplingIcon /> Składniki
                </h2>
                <div className={styles.formHeaderButtonSection}>
-                  <Loader />
+                  {isGenerating === 'ingredients' ? <Loader /> : ''}
                   <Button type={ButtonType.Secondary} onClick={handleGenerate}>
                      Generuj
                   </Button>
