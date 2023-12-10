@@ -12,7 +12,7 @@ interface InputProps {
    handleInput: (event: React.ChangeEvent<HTMLTextAreaElement>, ingredientName: IngredType) => void;
 }
 
-const Input = (props: InputProps) => {
+const IngredientInput = (props: InputProps) => {
    const [hasMounted, setHasMounted] = useState(false);
    const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -60,4 +60,4 @@ const Input = (props: InputProps) => {
    );
 };
 
-export default Input;
+export default IngredientInput;

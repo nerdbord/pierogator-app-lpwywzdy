@@ -1,7 +1,7 @@
 import { IngredType } from "../enums/enums";
 
 
-export const messagesHelper = (ingredient: IngredType) => {
+export const ingredientsMessagesHelper = (ingredient: IngredType) => {
     switch (ingredient) {
        case IngredType.ciasto:
           return [

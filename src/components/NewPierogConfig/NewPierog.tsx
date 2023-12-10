@@ -10,6 +10,7 @@ const NewPierog = () => {
    const [doughValue, setDoughValue] = useState('');
    const [fillingValue, setFillingValue] = useState('');
    const [ingredsValue, setIngredsValue] = useState('');
+   const [pierogName, setPierogName] = useState('')
 
    const stateProps = {
     values: {
@@ -24,10 +25,12 @@ const NewPierog = () => {
     },
   };
 
+  const nameProps = {value: pierogName, setter: setPierogName}
+
    return (
       <div className={styles.form}>
          <Ingredients inputValues={stateProps} />
-         <PierogImage inputValues={stateProps.values}/>
+         <PierogImage inputValues={stateProps.values} nameSettings={nameProps}/>
          <Recipe inputValues={stateProps.values}/>
       </div>
    );

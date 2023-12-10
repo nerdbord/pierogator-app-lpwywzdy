@@ -4,7 +4,7 @@ import { ButtonType, IngredType } from '../../enums/enums';
 import { generateAIText } from '../../api/client';
 import DumplingIcon from '../icons/DumplingIcon';
 import Button from '../UI/Button';
-import Input from '../UI/Input';
+import IngredientInput from '../UI/IngredientInput';
 import Loader from '../UI/Loader';
 
 interface IngredientsProps {
@@ -68,13 +68,16 @@ const Ingredients = (props: IngredientsProps) => {
    const handleGenerate = async () => {
       setIsGenerating(true);
 
-      ingredTypes.forEach(async (ingredient) => {
+      const promises = ingredTypes.map(async (ingredient) => {
          if (getBooleanHelper(ingredient)) return;
          const apiResponse = await generateAIText(ingredient);
          const newValue = apiResponse.choices[0].message.content;
          setValueHelper(ingredient, newValue);
-         setIsGenerating(false);
-      });
+      },);
+
+      await Promise.all(promises)
+
+      setIsGenerating(false)
    };
 
    const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>, ingredient: IngredType) => {
@@ -90,27 +93,27 @@ const Ingredients = (props: IngredientsProps) => {
             </h2>
             <div className={styles.formHeaderButtonSection}>
                {isGenerating && <Loader />}
-               <Button type={ButtonType.Secondary} onClick={handleGenerate}>
+               <Button type={ButtonType.Secondary} onClick={handleGenerate} isDisabled={isGenerating}>
                   Generuj
                </Button>
             </div>
          </div>
          <section>
-            <Input
+            <IngredientInput
                ingredientName={IngredType.ciasto}
                displayValue={doughValue}
                isLocked={doughLocked}
                setLocked={setDoughLocked}
                handleInput={handleInput}
             />
-            <Input
+            <IngredientInput
                ingredientName={IngredType.nadzienie}
                displayValue={fillingValue}
                isLocked={fillingLocked}
                setLocked={setFillingLocked}
                handleInput={handleInput}
             />
-            <Input
+            <IngredientInput
                ingredientName={IngredType.skladniki}
                displayValue={ingredsValue}
                isLocked={ingredsLocked}
