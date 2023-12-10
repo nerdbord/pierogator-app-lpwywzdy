@@ -1,10 +1,11 @@
 .header {
-    width: 100%;
+   width: 100%;
 }
 
 svg {
-    width: 100%;
-    height: auto;
-    display: block; 
-    margin-bottom: 40px;
+   width: 100%;
+   height: auto;
+   display: block;
+   margin-top: -10px;
+   margin-bottom: 40px; 
 }
