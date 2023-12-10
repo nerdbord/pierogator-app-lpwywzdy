@@ -14,6 +14,9 @@ const NewPierog = () => {
    const [ingredsValue, setIngredsValue] = useState('');
    const [pierogName, setPierogName] = useState('');
    const [imageData, setImageData] = useState('');
+
+   const [additonalInfoValue, setAdditionalInfoValue] = useState('');
+
    const [ingredientStep, setIngredientStep] = useState(true);
 
    const stateProps = {
@@ -21,11 +24,13 @@ const NewPierog = () => {
          dough: doughValue,
          filling: fillingValue,
          ingreds: ingredsValue,
+         additonalInfo: additonalInfoValue,
       },
       setters: {
          dough: setDoughValue,
          filling: setFillingValue,
          ingreds: setIngredsValue,
+         additonalInfo: setAdditionalInfoValue,
       },
    };
 
@@ -64,13 +69,18 @@ const NewPierog = () => {
                   editable={false}
                   setEdit={setIngredientStep}
                />
-               <Recipe inputValues={stateProps.values} nameSettings={nameAndImage.nameSettings} />
+               <Recipe inputValues={stateProps} nameSettings={nameAndImage.nameSettings} />
             </>
          );
       }
    };
 
-   return <div className={styles.form}>{stepChanger()}</div>;
+   return (
+      <>
+         <div className={styles.form}>{stepChanger()}</div>
+         {/* <Recipe inputValues={stateProps} nameSettings={nameAndImage.nameSettings} /> */}
+      </>
+   );
 };
 
 export default NewPierog;
