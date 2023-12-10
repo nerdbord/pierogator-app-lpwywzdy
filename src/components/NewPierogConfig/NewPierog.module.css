@@ -1,9 +1,3 @@
-.mainWrapper {
-   max-width: 375px;
-   border: 1px salmon solid;
-   padding-inline: 16px;
-}
-
 .form {
    padding: 18px 0 32px;
 }
@@ -12,7 +6,6 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
-
    margin: 18px 0 24px;
 }
 

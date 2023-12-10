@@ -7,11 +7,12 @@ interface SimpleInputProps {
         setter: React.Dispatch<React.SetStateAction<string>>;
      };
      placeholder: string;
+     maxLen?: number
      disabled?: boolean;
 }
 
 const SimpleInput = (props: SimpleInputProps) => {
-   const localHandleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+   const localHandleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     props.valueSettings.setter(event.target.value)
    };
 
@@ -31,14 +32,13 @@ const SimpleInput = (props: SimpleInputProps) => {
       <div className={styles.inputTopWrapper}>
          <h3 className={styles.titleStyle}>Nazwa</h3>
          <div className={simpleWrapperStyles}>
-            <input
-               type='text'
+            <textarea
                disabled={props.disabled}
                onChange={localHandleInput}
                className={simpleInputStyles}
                value={props.valueSettings.value}
                placeholder={props.placeholder}
-               maxLength={30}
+               maxLength={props.maxLen || 50}
             />
          </div>
       </div>

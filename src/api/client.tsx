@@ -1,12 +1,13 @@
 import { IngredType } from '../enums/enums';
 import { ingredientsMessagesHelper } from './clientHelpers';
 
-const apiToken = import.meta.env.VITE_API_TOKEN;
+const openAIapiToken = import.meta.env.VITE_API_TOKEN;
+const nerdyApiToken = import.meta.env.NERDY_API_TOKEN;
 
 export const generateAIText = async (ingredient: IngredType) => {
    const url = 'https://training.nerdbord.io/api/v1/openai/chat/completions';
    const headers = {
-      Authorization: apiToken,
+      Authorization: openAIapiToken,
       'Content-Type': 'application/json',
    };
 
@@ -41,7 +42,7 @@ interface IngredientValues {
 export const generateAIImage = async (values: IngredientValues) => {
    const url = 'https://training.nerdbord.io/api/v1/openai/images/generations';
    const headers = {
-      Authorization: apiToken,
+      Authorization: openAIapiToken,
       'Content-Type': 'application/json',
    };
 
@@ -69,4 +70,18 @@ export const generateAIImage = async (values: IngredientValues) => {
    } catch (error) {
       console.error('There was a problem with the fetch operation: ', error);
    }
+};
+
+export const getAllPierogi = async () => {
+   const apiURL = 'https://training.nerdbord.io/api/v1/pierogator/dumpling-recipes';
+   return fetch(apiURL)
+      .then((response) => {
+         if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+         }
+         return response.json();
+      })
+      .catch((error) => {
+         console.error('Error fetching data:', error);
+      });
 };

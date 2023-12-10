@@ -34,6 +34,8 @@ const NewPierog = () => {
       imageSettings: { value: imageData, setter: setImageData },
    };
 
+   
+
    const handleSave = () => {
       setIngredientStep(false);
    };
@@ -48,8 +50,8 @@ const NewPierog = () => {
                   pierogSettings={nameAndImage}
                   editable={true}
                />
-               {pierogName && (
-                  <Button type={ButtonType.Primary} onClick={handleSave}>
+               {imageData && (
+                  <Button type={ButtonType.Primary} onClick={handleSave} isDisabled={pierogName.trim().length == 0}>
                      Zapisz i przejdź do tworzenia przepisu
                   </Button>
                )}

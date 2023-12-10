@@ -88,6 +88,7 @@ const PierogImage = (props: PierogImageProps) => {
                   valueSettings={props.pierogSettings.nameSettings}
                   placeholder="wpisz nazwę pieroga"
                   disabled={!props.editable}
+                  maxLen={30}
                />
             )}
          </section>

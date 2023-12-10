@@ -21,7 +21,7 @@
 }
 
 .buttonPrimary:disabled{
-   cursor: wait;
+   cursor: default;
    background-color: var(--color-dark-green);
 }
 
@@ -30,6 +30,6 @@
 }
 
 .buttonSecondary:disabled{
-   cursor: wait;
+   cursor: default;
    background-color: var(--color-white);
 }
