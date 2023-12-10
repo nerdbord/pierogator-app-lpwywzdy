@@ -50,6 +50,11 @@
     justify-content: space-between;
  }
 
+ .thumbnailButtonWrapper{
+    display: flex;
+    gap: 15px;
+ }
+
  .h3{
     margin-top: 10px;
     font-size: 16px; 

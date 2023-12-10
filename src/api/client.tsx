@@ -109,3 +109,27 @@ export const getMyPierogi = async () => {
       throw error;
    }
 };
+
+export const deleteMyPierog = async (id: string) => {
+   const url = `https://training.nerdbord.io/api/v1/pierogator/dumpling-recipes/${id}`;
+
+   fetch(url, {
+      method: 'DELETE',
+      headers: {
+         Authorization: nerdyApiToken,
+         'Content-Type': 'application/json',
+      },
+   })
+      .then((response) => {
+         if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+         }
+         return response.json();
+      })
+      .then((data) => {
+         console.log('Delete successful:', data);
+      })
+      .catch((error) => {
+         console.error('Error deleting recipe:', error);
+      });
+};

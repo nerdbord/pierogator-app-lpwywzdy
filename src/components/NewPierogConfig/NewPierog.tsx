@@ -6,11 +6,11 @@ import Ingredients from './Ingredients';
 import PierogImage from './PierogImage';
 import Recipe from './Recipe';
 import Button from '../UI/Button';
-import { ButtonType } from '../../enums/enums';
+import { ButtonType, PierogObject } from '../../enums/enums';
 
 const NewPierog = () => {
-   const [doughValue, setDoughValue] = useState('');
-   const [fillingValue, setFillingValue] = useState('');
+   const [doughValue, setDoughValue] = useState("");
+   const [fillingValue, setFillingValue] = useState( '');
    const [ingredsValue, setIngredsValue] = useState('');
    const [pierogName, setPierogName] = useState('');
    const [imageData, setImageData] = useState('');
