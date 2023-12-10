@@ -13,15 +13,24 @@ interface PierogImageProps {
       filling: string;
       ingreds: string;
    };
-   nameSettings: {
-      value: string;
-      setter: React.Dispatch<React.SetStateAction<string>>;
+   pierogSettings: {
+      nameSettings: {
+         value: string;
+         setter: React.Dispatch<React.SetStateAction<string>>;
+      };
+      imageSettings: {
+         value: string;
+         setter: React.Dispatch<React.SetStateAction<string>>;
+      };
    };
+   editable: boolean;
+   setEdit?:  React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const PierogImage = (props: PierogImageProps) => {
    const [isGenerating, setIsGenerating] = useState(false);
-   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+   const generatedImage = props.pierogSettings.imageSettings.value;
+   const setGeneratedImage = props.pierogSettings.imageSettings.setter;
    const [generatedDescription, setGeneratedDescription] = useState<string | null>(null);
 
    const handleGenerate = async () => {
@@ -37,6 +46,14 @@ const PierogImage = (props: PierogImageProps) => {
       }
    };
 
+   const handleButtonClick = () => {
+      if (props.editable) {
+         handleGenerate()
+      } else{
+         props.setEdit && props.setEdit(true);
+      }
+   }
+
    return (
       <>
          <div className={styles.formHeader}>
@@ -45,13 +62,15 @@ const PierogImage = (props: PierogImageProps) => {
             </h2>
             <div className={styles.formHeaderButtonSection}>
                {isGenerating && <Loader />}
-               <Button
-                  type={ButtonType.Secondary}
-                  onClick={handleGenerate}
-                  isDisabled={isGenerating}
-               >
-                  Generuj
-               </Button>
+               {(
+                  <Button
+                     type={ButtonType.Secondary}
+                     onClick={handleButtonClick}
+                     isDisabled={isGenerating}
+                  >
+                     {props.editable ? "Generuj" : "Zmień"}
+                  </Button>
+               )}
             </div>
          </div>
          <section className={styles.imageSection}>
@@ -64,7 +83,13 @@ const PierogImage = (props: PierogImageProps) => {
             )}
          </section>
          <section className={styles.nameStyle}>
-            {generatedImage && <SimpleInput valueSettings={props.nameSettings} placeholder="wpisz nazwę pieroga"/>}
+            {generatedImage && (
+               <SimpleInput
+                  valueSettings={props.pierogSettings.nameSettings}
+                  placeholder="wpisz nazwę pieroga"
+                  disabled={!props.editable}
+               />
+            )}
          </section>
       </>
    );

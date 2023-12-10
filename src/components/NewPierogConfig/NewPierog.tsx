@@ -13,6 +13,7 @@ const NewPierog = () => {
    const [fillingValue, setFillingValue] = useState('');
    const [ingredsValue, setIngredsValue] = useState('');
    const [pierogName, setPierogName] = useState('');
+   const [imageData, setImageData] = useState('');
    const [ingredientStep, setIngredientStep] = useState(true);
 
    const stateProps = {
@@ -28,36 +29,48 @@ const NewPierog = () => {
       },
    };
 
-   const nameProps = { value: pierogName, setter: setPierogName };
+   const nameAndImage = {
+      nameSettings: { value: pierogName, setter: setPierogName },
+      imageSettings: { value: imageData, setter: setImageData },
+   };
 
    const handleSave = () => {
-
-   }
+      setIngredientStep(false);
+   };
 
    const stepChanger = () => {
       if (ingredientStep) {
          return (
             <>
                <Ingredients inputValues={stateProps} />
-               <PierogImage inputValues={stateProps.values} nameSettings={nameProps} />
-               {pierogName && <Button type={ButtonType.Primary} onClick={handleSave}>Zapisz i przejdź do tworzenia przepisu</Button>}
+               <PierogImage
+                  inputValues={stateProps.values}
+                  pierogSettings={nameAndImage}
+                  editable={true}
+               />
+               {pierogName && (
+                  <Button type={ButtonType.Primary} onClick={handleSave}>
+                     Zapisz i przejdź do tworzenia przepisu
+                  </Button>
+               )}
             </>
          );
       } else {
-        return (
+         return (
             <>
-            <PierogImage inputValues={stateProps.values} nameSettings={nameProps} />
-            <Recipe inputValues={stateProps.values} nameSettings={nameProps}/>
+               <PierogImage
+                  inputValues={stateProps.values}
+                  pierogSettings={nameAndImage}
+                  editable={false}
+                  setEdit={setIngredientStep}
+               />
+               <Recipe inputValues={stateProps.values} nameSettings={nameAndImage.nameSettings} />
             </>
-        )
+         );
       }
    };
 
-   return (
-      <div className={styles.form}>
-         {stepChanger()}
-      </div>
-   );
+   return <div className={styles.form}>{stepChanger()}</div>;
 };
 
 export default NewPierog;

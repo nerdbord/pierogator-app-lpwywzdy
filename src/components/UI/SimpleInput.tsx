@@ -10,6 +10,7 @@ interface SimpleInputProps {
         setter: React.Dispatch<React.SetStateAction<string>>;
      };
      placeholder: string;
+     disabled?: boolean;
 }
 
 const SimpleInput = (props: SimpleInputProps) => {
@@ -35,6 +36,7 @@ const SimpleInput = (props: SimpleInputProps) => {
          <div className={simpleWrapperStyles}>
             <input
                type='text'
+               disabled={props.disabled}
                onChange={localHandleInput}
                className={simpleInputStyles}
                value={props.valueSettings.value}
