@@ -4,6 +4,7 @@
    color: var(--color-white);
    background-color: var(--color-dark-green);
    border: none;
+   width: 100%;
 }
 
 .buttonSecondary {

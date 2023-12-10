@@ -5,6 +5,7 @@ import Loader from '../UI/Loader';
 import DumplingIcon from '../icons/DumplingIcon';
 import styles from './NewPierog.module.css';
 import { generateAIImage } from '../../api/client';
+import SimpleInput from '../UI/SimpleInput';
 
 interface PierogImageProps {
    inputValues: {
@@ -38,7 +39,6 @@ const PierogImage = (props: PierogImageProps) => {
 
    return (
       <>
-         {' '}
          <div className={styles.formHeader}>
             <h2>
                <DumplingIcon /> Pieróg
@@ -63,7 +63,9 @@ const PierogImage = (props: PierogImageProps) => {
                />
             )}
          </section>
-         <section className=''></section>
+         <section className={styles.nameStyle}>
+            {generatedImage && <SimpleInput valueSettings={props.nameSettings} placeholder="wpisz nazwę pieroga"/>}
+         </section>
       </>
    );
 };

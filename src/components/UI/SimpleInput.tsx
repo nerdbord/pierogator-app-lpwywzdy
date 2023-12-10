@@ -4,56 +4,41 @@ import { IngredType, LockIconType } from '../../enums/enums';
 import styles from './Input.module.css';
 import classNames from 'classnames';
 
-interface InputProps {
-   ingredientName: IngredType;
-   displayValue: string;
-   isLocked: boolean;
-   setLocked: React.Dispatch<React.SetStateAction<boolean>>;
-   handleInput: (event: React.ChangeEvent<HTMLTextAreaElement>, ingredientName: IngredType) => void;
+interface SimpleInputProps {
+    valueSettings: {
+        value: string;
+        setter: React.Dispatch<React.SetStateAction<string>>;
+     };
+     placeholder: string;
 }
 
-const SimpleInput = (props: InputProps) => {
-   const [hasMounted, setHasMounted] = useState(false);
-   const inputRef = useRef<HTMLTextAreaElement>(null);
-
-   useLayoutEffect(() => {
-      if (hasMounted && inputRef.current) {
-         inputRef.current.style.height = 'auto'; // Reset the height to auto
-         inputRef.current.style.height = inputRef.current.scrollHeight + 'px'; // Set the height based on the content
-      } else {
-         // Mark the component as mounted after the first render
-         setHasMounted(true);
-      }
-   }, [props.displayValue, hasMounted]);
-
-   const handleLock = () => {
-      props.setLocked((prev) => !prev);
+const SimpleInput = (props: SimpleInputProps) => {
+   const localHandleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.valueSettings.setter(event.target.value)
    };
 
-   const inputWrapperStyle = classNames(
-      styles.inputWrapper,
-      props.isLocked ? styles.lockedStyle : styles.unlockedStyle,
-   );
 
-   const localHandleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      props.handleInput(event, props.ingredientName);
-   };
+   const simpleInputStyles = classNames(
+    styles.inputStyle,
+    styles.simpleInputStyle
+   )
+
+   const simpleWrapperStyles = classNames(
+    styles.inputWrapper,
+    styles.simpleWrapper,
+   )
+
 
    return (
       <div className={styles.inputTopWrapper}>
-         <h3 className={styles.titleStyle}>{props.ingredientName}</h3>
-         <div className={inputWrapperStyle}>
-            <div className={styles.iconWrapper} onClick={handleLock}>
-               <LockIcon type={props.isLocked ? LockIconType.locked : LockIconType.unlocked} />
-            </div>
-            <textarea
-               rows={1}
-               ref={inputRef}
+         <h3 className={styles.titleStyle}>Nazwa</h3>
+         <div className={simpleWrapperStyles}>
+            <input
+               type='text'
                onChange={localHandleInput}
-               className={styles.inputStyle}
-               disabled={props.isLocked}
-               value={props.displayValue}
-               placeholder={'wpisz, wygeneruj lub zostaw puste'}
+               className={simpleInputStyles}
+               value={props.valueSettings.value}
+               placeholder={props.placeholder}
                maxLength={30}
             />
          </div>

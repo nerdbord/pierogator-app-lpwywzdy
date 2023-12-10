@@ -7,7 +7,7 @@ import { ButtonType } from '../../enums/enums';
 interface ButtonProps {
    children: string;
    type: ButtonType;
-   isDisabled: boolean;
+   isDisabled?: boolean;
    onClick?: () => void;
 }
 

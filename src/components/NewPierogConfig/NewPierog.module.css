@@ -29,6 +29,11 @@
 }
 
 .imageStyle {
-    width: 100%; 
-    height: auto; 
+   width: 100%;
+   height: auto;
+}
+
+.nameStyle {
+   margin-top: 15px;
+   margin-bottom: 20px;
 }
