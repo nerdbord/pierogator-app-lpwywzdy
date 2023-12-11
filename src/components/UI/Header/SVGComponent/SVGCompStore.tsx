@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const SVGComponentStore: FC = () => {
+const SVGCompStore: FC = () => {
    return (
       <svg width="375" height="118" viewBox="0 0 375 118" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clip-path="url(#clip0_47_1395)">
@@ -134,4 +134,4 @@ const SVGComponentStore: FC = () => {
    );
 };
 
-export default SVGComponentStore;
+export default SVGCompStore;

@@ -1,20 +1,24 @@
-// styles
-import styles from './HeaderBackground.module.css';
-import SVGComponentMachine from '../SVGComponent/SVGComponentMachine';
-import SVGComponentStore from '../SVGComponent/SVGComponentStore';
-import React from 'react';
 
-interface HeaderBackgroundProps {
-   background: string;
+import styles from './HeaderBackground.module.css';
+import SVGCompMachine from '../SVGComponent/SVGCompMachine';
+import SVGCompStore from '../SVGComponent/SVGCompStore';
+import { HeaderType } from '../../../../enums/enums';
+
+interface HeaderProps {
+   type: HeaderType;
 }
 
-const HeaderBackground: React.FC<HeaderBackgroundProps> = ({ background }) => {
+const HeaderBackground = (props: HeaderProps) => {
    return (
-      <header className={`${styles.header}`}>
-         {background === 'dumplingMachine' ? <SVGComponentMachine /> : ''} 
-         {background === 'dumplingStore' ? <SVGComponentStore /> : ''}
-      </header>
+      <button
+         className={
+            `${styles.header}`
+         }
+      >
+         {props.type === HeaderType.machine ? <SVGCompMachine/> : <SVGCompStore/>}
+      </button>
    );
 };
 
-export default HeaderBackground;
+export default HeaderBackground
+

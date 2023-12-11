@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const SVGComponentMachine: FC = () => {
+const SVGCompMachine: FC = () => {
    return (
       <svg
          width="375"
@@ -372,4 +372,4 @@ const SVGComponentMachine: FC = () => {
    );
 };
 
-export default SVGComponentMachine;
+export default SVGCompMachine;
