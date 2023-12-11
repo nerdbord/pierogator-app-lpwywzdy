@@ -1,9 +1,18 @@
-.header {
+.machine {
    width: 100%;
+   height: 118px;
+   display: flex;
+   background-image:url('../../../../assets/DumplingMachine.jpg');
+   background-size: cover;
+   background-position: center;
 }
 
-svg {
+.store {
    width: 100%;
-   height: auto;
-   display: block;
+   height: 118px;
+   display: flex;
+  
+   background-image:url('../../../../assets/DumplingStore.jpg');
+   background-size: cover;
+   background-position: center;
 }

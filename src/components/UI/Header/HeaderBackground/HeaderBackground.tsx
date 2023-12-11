@@ -1,6 +1,5 @@
 import styles from './HeaderBackground.module.css';
-import SVGCompMachine from '../SVGComponent/SVGCompMachine';
-import SVGCompStore from '../SVGComponent/SVGCompStore';
+
 import { HeaderType } from '../../../../enums/enums';
 
 interface HeaderProps {
@@ -9,8 +8,7 @@ interface HeaderProps {
 
 const HeaderBackground = (props: HeaderProps) => {
    return (
-      <header className={`${styles.header}`}>
-         {props.type === HeaderType.machine ? <SVGCompMachine /> : <SVGCompStore />}
+      <header className={props.type === HeaderType.machine ? styles.machine : styles.store}>
       </header>
    );
 };

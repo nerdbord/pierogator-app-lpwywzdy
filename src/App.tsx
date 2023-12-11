@@ -5,13 +5,14 @@ import HeaderBackground from './components/UI/Header/HeaderBackground/HeaderBack
 import NewPierog from './components/NewPierogConfig/NewPierog';
 import { HeaderType } from './enums/enums';
 
-const App = () => {
-   return (
-      <div className={styles.mainWrapper}>
-         <HeaderBackground type={HeaderType.machine}></HeaderBackground>
-         <NewPierog />
-      </div>
-   );
-};
+   const App = () => {
 
-export default App;
+      return (
+         <div className={styles.mainWrapper}>
+            <HeaderBackground type={HeaderType.machine}></HeaderBackground>
+            <NewPierog />
+         </div>
+      );
+   };
+
+   export default App;
