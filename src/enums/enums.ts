@@ -12,3 +12,9 @@ export enum HeaderType {
    machine = 'machine',
    store = 'store',
 }
+
+export enum IngredType {
+   ciasto = 'Ciasto',
+   nadzienie = 'Nadzienie',
+   skladniki = 'Składniki',
+}

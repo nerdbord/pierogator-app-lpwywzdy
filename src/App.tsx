@@ -1,18 +1,16 @@
 import styles from './App.module.css';
+
+// components
 import HeaderBackground from './components/UI/Header/HeaderBackground/HeaderBackground';
-import Button from './components/UI/Button';
-import Input from './UI/Input';
-import { ButtonType, HeaderType } from './enums/enums';
+import NewPierog from './components/NewPierogConfig/NewPierog';
+import { HeaderType } from './enums/enums';
 
 const App = () => {
    return (
-      <>
+      <div className={styles.mainWrapper}>
          <HeaderBackground type={HeaderType.machine}></HeaderBackground>
-         <h1>Pierogator świąteczny</h1>
-         <Button type={ButtonType.Primary}>Zapisz i przejdź do tworzenia przepisu</Button>
-         <Button type={ButtonType.Secondary}>Generuj</Button>
-         <Input ingredientName="Ciasto" placeholder="test" />
-      </>
+         <NewPierog />
+      </div>
    );
 };
 

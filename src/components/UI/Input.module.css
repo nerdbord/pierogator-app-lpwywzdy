@@ -1,15 +1,23 @@
 .inputTopWrapper {
-   padding: 16px;
+   margin-bottom: 24px;
 }
 
 .titleStyle {
+   margin-bottom: 7px;
 }
 
 .inputWrapper {
+   padding: 16px;
    background-color: var(--color-gray-background);
    display: flex;
+   align-items: flex-start;
+   gap: 12px;
    border-radius: 4px;
    border: 1px solid;
+}
+
+.inputTopWrapper:last-child {
+   margin-bottom: 0;
 }
 
 .lockedStyle {
@@ -21,7 +29,8 @@
 }
 
 .iconWrapper {
-   padding: 8px;
+   width: 34px;
+   height: 34px;
 }
 
 .inputStyle {
@@ -32,8 +41,12 @@
    overflow: hidden;
    width: 100%;
    height: 40px;
-   padding: 16px;
-   padding-bottom: 0px;
+
+   font-family: Poppins;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 20px;
+   letter-spacing: 0;
 }
 
 .inputStyle:focus-visible {
@@ -42,4 +55,11 @@
 
 .inputStyle::placeholder {
    color: var(--color-gray-dark);
+<<<<<<< HEAD:src/UI/Input.module.css
+=======
+}
+
+.simpleInputStyle{
+   height: 20px
+>>>>>>> main:src/components/UI/Input.module.css
 }
