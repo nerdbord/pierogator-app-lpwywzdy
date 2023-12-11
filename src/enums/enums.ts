@@ -10,5 +10,5 @@ export enum ButtonType {
 
 export enum HeaderType {
    machine = 'machine',
-   store = 'store'
+   store = 'store',
 }
