@@ -1,12 +1,12 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import styles from './NewPierog.module.css';
 import inputStyles from './../UI/Input.module.css';
-import { ButtonType } from '../../enums/enums';
+import { ButtonType, IngredType } from '../../enums/enums';
 import Loader from '../UI/Loader';
 import Button from '../UI/Button';
 import DumplingIcon from '../icons/DumplingIcon';
 import classNames from 'classnames';
-import { generateAIRecipe } from '../../api/client';
+import { generateAIRecipeIngredients } from '../../api/client';
 
 interface RecipeProps {
    inputValues: {
@@ -50,8 +50,10 @@ const Recipe = (props: RecipeProps) => {
 
       setIsGenerating(true);
       try {
-         const response = await generateAIRecipe(props.inputValues.values);
-         console.log(response.choices[0].message.content);
+         const doughResponse = await generateAIRecipeIngredients(props.inputValues.values.dough, IngredType.ciasto);
+         const fillingRespone = await generateAIRecipeIngredients(props.inputValues.values.filling, IngredType.nadzienie);
+         console.log(doughResponse.choices[0].message.content);
+         console.log(fillingRespone.choices[0].message.content);
       } catch (error) {
          console.error('Error generating recipe:', error);
       } finally {

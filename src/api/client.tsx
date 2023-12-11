@@ -72,14 +72,8 @@ export const generateAIImage = async (values: IngredientValues) => {
    }
 };
 
-interface recipeInfo {
-   dough: string;
-   filling: string;
-   ingreds: string;
-   additonalInfo: string;
-}
 
-export const generateAIRecipe = async (allIngredients: recipeInfo) => {
+export const generateAIRecipeIngredients = async (description: string, ingred: IngredType) => {
    const url = 'https://training.nerdbord.io/api/v1/openai/chat/completions';
    const headers = {
       Authorization: openAIapiToken,
@@ -95,28 +89,15 @@ export const generateAIRecipe = async (allIngredients: recipeInfo) => {
             messages: [
                {
                   role: 'system',
-                  content: `Podaj tylko składniki do wykonania ${allIngredients.dough} w formie listy numerowanej.`,
+                  content: `Podaj tylko składniki wraz z ilościami w formie listy numerowanej.`,
                },
                {
                   role: 'user',
-                  content: `Podaj składniki do wykonania ${allIngredients.dough}`,
+                  content: `Podaj składniki do wykonania ${ingred} do pierogów, zgodnie z następującym opisem: ${description || "tradycyjne"}`,
                },
             ],
-            // max_tokens: 20,
-            // temperature: 1,
-
-            // returns
-            // "1. 500 g mąki pszennej
-            // 2. 250 ml ciepłej wody
-            // 3. 3 jajka
-            // 4. 1 łyżeczka soli
-            // 5. 2 łyżki oleju roślinnego
-            // 6. 150 g masła, schłodzonego i pokrojonego na małe kawałki
-            // 7. 100 g orzechów włoskich, posiekanych
-            // 8. 100 g cukru brązowego
-            // 9. 1 łyżka cynamonu
-            // 10. 1 łyżka mąki
-            // 11. 1 szczypta soli"
+             max_tokens: 200,
+             temperature: 1,
          }),
       });
 
