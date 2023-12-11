@@ -1,14 +1,16 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
+
 import styles from './NewPierog.module.css';
 import inputStyles from './../UI/Input.module.css';
 import accordionStyles from './../UI/Accordion.module.css';
+
 import { ButtonType, IngredType } from '../../enums/enums';
+import { generateAIRecipeIngredients } from '../../api/client';
+
 import Loader from '../UI/Loader';
 import Button from '../UI/Button';
 import DumplingIcon from '../icons/DumplingIcon';
-import classNames from 'classnames';
-import { generateAIRecipeIngredients } from '../../api/client';
-import ArrowIcon from '../icons/ArrowIcon';
 import Accordion from '../UI/Accordion';
 
 interface RecipeProps {
@@ -38,7 +40,7 @@ const Recipe = (props: RecipeProps) => {
    const [recipeIngredDough, setRecipeIngredDough] = useState([]);
    const [recipeIngredFilling, setRecipeIngredFilling] = useState([]);
    const [isGenerating, setIsGenerating] = useState(false);
-   const [genarationState, setGenerationState] = useState('');
+   const [generationState, setGenerationState] = useState('');
 
    const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -52,22 +54,24 @@ const Recipe = (props: RecipeProps) => {
       }
    }, [props.inputValues.values.additonalInfo, hasMounted]);
 
-   const handleGenerate = async () => {
-      console.log(props.inputValues.values);
+   const generateRecipeIngredients = async () => {
+      const doughResponse = await generateAIRecipeIngredients(
+         props.inputValues.values.dough,
+         IngredType.ciasto,
+      );
+      const fillingResponse = await generateAIRecipeIngredients(
+         props.inputValues.values.filling,
+         IngredType.nadzienie,
+      );
 
+      setRecipeIngredDough(JSON.parse(doughResponse.choices[0].message.content));
+      setRecipeIngredFilling(JSON.parse(fillingResponse.choices[0].message.content));
+   };
+
+   const handleGenerate = async () => {
       setIsGenerating(true);
       try {
-         const doughResponse = await generateAIRecipeIngredients(
-            props.inputValues.values.dough,
-            IngredType.ciasto,
-         );
-         const fillingRespone = await generateAIRecipeIngredients(
-            props.inputValues.values.filling,
-            IngredType.nadzienie,
-         );
-
-         setRecipeIngredDough(JSON.parse(doughResponse.choices[0].message.content));
-         setRecipeIngredFilling(JSON.parse(fillingRespone.choices[0].message.content));
+         await generateRecipeIngredients();
          setGenerationState('success');
       } catch (error) {
          console.error('Error generating recipe:', error);
@@ -75,6 +79,14 @@ const Recipe = (props: RecipeProps) => {
       } finally {
          setIsGenerating(false);
       }
+   };
+
+   const renderIngredientList = (ingredients: any[]) => {
+      return ingredients.map((ingred: { name: string; quantity: string }, index) => (
+         <li className={accordionStyles.listItem} key={ingred.name}>{`${index + 1}. ${
+            ingred.quantity
+         },  ${ingred.name}`}</li>
+      ));
    };
 
    const localHandleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -114,27 +126,17 @@ const Recipe = (props: RecipeProps) => {
          </section>
 
          {/* accordion */}
-         {genarationState === 'success' && (
+         {generationState === 'success' && (
             <>
                {/* ingredients */}
                <Accordion title="Składniki">
                   <ol>
                      <p className={accordionStyles.subTitle}>Ciasto</p>
-                     {recipeIngredDough.map((ingred: { name: string; quantity: string }, index) => (
-                        <li className={accordionStyles.listItem} key={ingred.name}>{`${
-                           index + 1
-                        }. ${ingred.quantity},  ${ingred.name}`}</li>
-                     ))}
+                     {renderIngredientList(recipeIngredDough)}
                   </ol>
                   <ol>
                      <p className={accordionStyles.subTitle}>Farsz</p>
-                     {recipeIngredFilling.map(
-                        (ingred: { name: string; quantity: string }, index) => (
-                           <li className={accordionStyles.listItem} key={ingred.name}>{`${
-                              index + 1
-                           }. ${ingred.quantity},  ${ingred.name}`}</li>
-                        ),
-                     )}
+                     {renderIngredientList(recipeIngredFilling)}
                   </ol>
                </Accordion>
 
@@ -142,26 +144,16 @@ const Recipe = (props: RecipeProps) => {
                <Accordion title="Przygotowanie">
                   <ol>
                      <p className={accordionStyles.subTitle}>Ciasto</p>
-                     {recipeIngredDough.map((ingred: { name: string; quantity: string }, index) => (
-                        <li className={accordionStyles.listItem} key={ingred.name}>{`${
-                           index + 1
-                        }. ${ingred.quantity},  ${ingred.name}`}</li>
-                     ))}
+                     {renderIngredientList(recipeIngredDough)}
                   </ol>
                   <ol>
                      <p className={accordionStyles.subTitle}>Farsz</p>
-                     {recipeIngredFilling.map(
-                        (ingred: { name: string; quantity: string }, index) => (
-                           <li className={accordionStyles.listItem} key={ingred.name}>{`${
-                              index + 1
-                           }. ${ingred.quantity},  ${ingred.name}`}</li>
-                        ),
-                     )}
+                     {renderIngredientList(recipeIngredFilling)}
                   </ol>
                </Accordion>
             </>
          )}
-         {genarationState === 'error' && (
+         {generationState === 'error' && (
             <p>Oops, try again! (AI did not generate proper object - FIX THIS)</p>
          )}
       </div>
