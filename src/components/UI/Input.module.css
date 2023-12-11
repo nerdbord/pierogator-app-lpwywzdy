@@ -55,11 +55,8 @@
 
 .inputStyle::placeholder {
    color: var(--color-gray-dark);
-<<<<<<< HEAD:src/UI/Input.module.css
-=======
 }
 
 .simpleInputStyle{
    height: 20px
->>>>>>> main:src/components/UI/Input.module.css
 }
