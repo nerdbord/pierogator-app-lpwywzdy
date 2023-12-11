@@ -9,6 +9,7 @@ import DumplingIcon from '../icons/DumplingIcon';
 import classNames from 'classnames';
 import { generateAIRecipeIngredients } from '../../api/client';
 import ArrowIcon from '../icons/ArrowIcon';
+import Accordion from '../UI/Accordion';
 
 interface RecipeProps {
    inputValues: {
@@ -64,10 +65,7 @@ const Recipe = (props: RecipeProps) => {
             props.inputValues.values.filling,
             IngredType.nadzienie,
          );
-         console.log(doughResponse.choices[0].message.content);
-         console.log(fillingRespone.choices[0].message.content);
-         console.log(JSON.parse(doughResponse.choices[0].message.content));
-         console.log(JSON.parse(fillingRespone.choices[0].message.content));
+
          setRecipeIngredDough(JSON.parse(doughResponse.choices[0].message.content));
          setRecipeIngredFilling(JSON.parse(fillingRespone.choices[0].message.content));
          setGenerationState('success');
@@ -87,11 +85,6 @@ const Recipe = (props: RecipeProps) => {
 
    const simpleWrapperStyles = classNames(inputStyles.inputWrapper, inputStyles.simpleWrapper);
 
-   const [accordionOpen, setAccordionOpen] = useState(false);
-
-   const handleOpen = () => {
-      setAccordionOpen((prevOpen) => !prevOpen);
-   };
    return (
       <div className={styles.form}>
          <div className={styles.formHeader}>
@@ -121,42 +114,56 @@ const Recipe = (props: RecipeProps) => {
          </section>
 
          {/* accordion */}
-
          {genarationState === 'success' && (
             <>
-               <section className={accordionStyles.wrapper}>
-                  <div className={accordionStyles.titleWrapper} onClick={handleOpen}>
-                     <p>Składniki</p>
-                     <ArrowIcon isOpen={accordionOpen} />
-                  </div>
-                  {accordionOpen && (
-                     <div className={accordionStyles.accordionContent}>
-                        <ol>
-                           <p className={accordionStyles.subTitle}>Ciasto</p>
-                           {recipeIngredDough.map(
-                              (ingred: { name: string; quantity: string }, index) => (
-                                 <li className={accordionStyles.listItem} key={ingred.name}>{`${
-                                    index + 1
-                                 }. ${ingred.quantity},  ${ingred.name}`}</li>
-                              ),
-                           )}
-                        </ol>
-                        <ol>
-                           <p className={accordionStyles.subTitle}>Farsz</p>
-                           {recipeIngredFilling.map(
-                              (ingred: { name: string; quantity: string }, index) => (
-                                 <li className={accordionStyles.listItem} key={ingred.name}>{`${
-                                    index + 1
-                                 }. ${ingred.quantity},  ${ingred.name}`}</li>
-                              ),
-                           )}
-                        </ol>
-                     </div>
-                  )}
-               </section>
+               {/* ingredients */}
+               <Accordion title="Składniki">
+                  <ol>
+                     <p className={accordionStyles.subTitle}>Ciasto</p>
+                     {recipeIngredDough.map((ingred: { name: string; quantity: string }, index) => (
+                        <li className={accordionStyles.listItem} key={ingred.name}>{`${
+                           index + 1
+                        }. ${ingred.quantity},  ${ingred.name}`}</li>
+                     ))}
+                  </ol>
+                  <ol>
+                     <p className={accordionStyles.subTitle}>Farsz</p>
+                     {recipeIngredFilling.map(
+                        (ingred: { name: string; quantity: string }, index) => (
+                           <li className={accordionStyles.listItem} key={ingred.name}>{`${
+                              index + 1
+                           }. ${ingred.quantity},  ${ingred.name}`}</li>
+                        ),
+                     )}
+                  </ol>
+               </Accordion>
+
+               {/* preparation */}
+               <Accordion title="Przygotowanie">
+                  <ol>
+                     <p className={accordionStyles.subTitle}>Ciasto</p>
+                     {recipeIngredDough.map((ingred: { name: string; quantity: string }, index) => (
+                        <li className={accordionStyles.listItem} key={ingred.name}>{`${
+                           index + 1
+                        }. ${ingred.quantity},  ${ingred.name}`}</li>
+                     ))}
+                  </ol>
+                  <ol>
+                     <p className={accordionStyles.subTitle}>Farsz</p>
+                     {recipeIngredFilling.map(
+                        (ingred: { name: string; quantity: string }, index) => (
+                           <li className={accordionStyles.listItem} key={ingred.name}>{`${
+                              index + 1
+                           }. ${ingred.quantity},  ${ingred.name}`}</li>
+                        ),
+                     )}
+                  </ol>
+               </Accordion>
             </>
          )}
-         {genarationState === 'error' && <p>Oops, try again!</p>}
+         {genarationState === 'error' && (
+            <p>Oops, try again! (AI did not generate proper object - FIX THIS)</p>
+         )}
       </div>
    );
 };
