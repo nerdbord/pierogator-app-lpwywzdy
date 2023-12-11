@@ -18,7 +18,7 @@ export const generateAIText = async (ingredient: IngredType) => {
          body: JSON.stringify({
             model: 'gpt-3.5-turbo',
             messages: ingredientsMessagesHelper(ingredient),
-            max_tokens: 20,
+            max_tokens: 50,
             temperature: 1,
          }),
       });
@@ -72,7 +72,6 @@ export const generateAIImage = async (values: IngredientValues) => {
    }
 };
 
-
 export const generateAIRecipeIngredients = async (description: string, ingred: IngredType) => {
    const url = 'https://training.nerdbord.io/api/v1/openai/chat/completions';
    const headers = {
@@ -89,15 +88,21 @@ export const generateAIRecipeIngredients = async (description: string, ingred: I
             messages: [
                {
                   role: 'system',
-                  content: `Podaj tylko składniki wraz z ilościami w formie listy numerowanej.`,
+                  // content: `Podaj tylko składniki wraz z ilościami w formie listy numerowanej.`,
+                  content: `Podaj tylko składniki wraz z ilościami w formie obiektu: 
+                  "${ingred === 'Nadzienie' ? 'filling' : 'dough'}": [
+                     {"name": nazwa składnika, "quantity": "ilość"},
+                  ]`,
                },
                {
                   role: 'user',
-                  content: `Podaj składniki do wykonania ${ingred} do pierogów, zgodnie z następującym opisem: ${description || "tradycyjne"}`,
+                  content: `Podaj składniki do wykonania ${ingred} do pierogów, zgodnie z następującym opisem: ${
+                     description || 'tradycyjne'
+                  }`,
                },
             ],
-             max_tokens: 200,
-             temperature: 1,
+            max_tokens: 200,
+            temperature: 1,
          }),
       });
 

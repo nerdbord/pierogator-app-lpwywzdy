@@ -50,8 +50,14 @@ const Recipe = (props: RecipeProps) => {
 
       setIsGenerating(true);
       try {
-         const doughResponse = await generateAIRecipeIngredients(props.inputValues.values.dough, IngredType.ciasto);
-         const fillingRespone = await generateAIRecipeIngredients(props.inputValues.values.filling, IngredType.nadzienie);
+         const doughResponse = await generateAIRecipeIngredients(
+            props.inputValues.values.dough,
+            IngredType.ciasto,
+         );
+         const fillingRespone = await generateAIRecipeIngredients(
+            props.inputValues.values.filling,
+            IngredType.nadzienie,
+         );
          console.log(doughResponse.choices[0].message.content);
          console.log(fillingRespone.choices[0].message.content);
       } catch (error) {
