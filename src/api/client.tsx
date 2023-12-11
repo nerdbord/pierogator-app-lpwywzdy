@@ -89,9 +89,9 @@ export const generateAIRecipeIngredients = async (description: string, ingred: I
                {
                   role: 'system',
                   // content: `Podaj tylko składniki wraz z ilościami w formie listy numerowanej.`,
-                  content: `Podaj tylko składniki wraz z ilościami w formie obiektu: 
-                  "${ingred === 'Nadzienie' ? 'filling' : 'dough'}": [
-                     {"name": nazwa składnika, "quantity": "ilość"},
+                  content: `Podaj tylko składniki wraz z ilościami w formie tablicy obiektów Java Script i dostarcz go w formie string, usuń wszystkie spacje, które nie należą do wartości: 
+                  [
+                     {name: nazwa składnika, "quantity": "ilość},
                   ]`,
                },
                {
@@ -101,7 +101,7 @@ export const generateAIRecipeIngredients = async (description: string, ingred: I
                   }`,
                },
             ],
-            max_tokens: 200,
+            // max_tokens: 200,
             temperature: 1,
          }),
       });

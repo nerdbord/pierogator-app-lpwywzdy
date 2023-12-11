@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import styles from './NewPierog.module.css';
 import inputStyles from './../UI/Input.module.css';
+import accordionStyles from './../UI/Accordion.module.css';
 import { ButtonType, IngredType } from '../../enums/enums';
 import Loader from '../UI/Loader';
 import Button from '../UI/Button';
@@ -30,9 +31,13 @@ interface RecipeProps {
 }
 
 const Recipe = (props: RecipeProps) => {
-   const [isGenerating, setIsGenerating] = useState(false);
-
    const [hasMounted, setHasMounted] = useState(false);
+
+   const [recipeIngredDough, setRecipeIngredDough] = useState([]);
+   const [recipeIngredFilling, setRecipeIngredFilling] = useState([]);
+   const [isGenerating, setIsGenerating] = useState(false);
+   const [genarationState, setGenerationState] = useState('');
+
    const inputRef = useRef<HTMLTextAreaElement>(null);
 
    useLayoutEffect(() => {
@@ -60,8 +65,14 @@ const Recipe = (props: RecipeProps) => {
          );
          console.log(doughResponse.choices[0].message.content);
          console.log(fillingRespone.choices[0].message.content);
+         console.log(JSON.parse(doughResponse.choices[0].message.content));
+         console.log(JSON.parse(fillingRespone.choices[0].message.content));
+         setRecipeIngredDough(JSON.parse(doughResponse.choices[0].message.content));
+         setRecipeIngredFilling(JSON.parse(fillingRespone.choices[0].message.content));
+         setGenerationState('success');
       } catch (error) {
          console.error('Error generating recipe:', error);
+         setGenerationState('error');
       } finally {
          setIsGenerating(false);
       }
@@ -101,6 +112,31 @@ const Recipe = (props: RecipeProps) => {
                </div>
             </div>
          </section>
+
+         {/* accordion */}
+
+         {genarationState === 'success' && (
+            <>
+               <section>
+                  Składniki
+                  <div>
+                     <ol>
+                        <p>Ciasto</p>
+                        {recipeIngredDough.map((ingred: { name: string; quantity: string }) => (
+                           <li key={ingred.name}>{`${ingred.quantity},  ${ingred.name}`}</li>
+                        ))}
+                     </ol>
+                     <ol>
+                        <p>Farsz</p>
+                        {recipeIngredFilling.map((ingred: { name: string; quantity: string }) => (
+                           <li key={ingred.name}>{`${ingred.quantity},  ${ingred.name}`}</li>
+                        ))}
+                     </ol>
+                  </div>
+               </section>
+            </>
+         )}
+         {genarationState === 'error' && <p>Oops, try again!</p>}
       </div>
    );
 };
