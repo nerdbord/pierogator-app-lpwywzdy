@@ -89,6 +89,14 @@ const Recipe = (props: RecipeProps) => {
       ));
    };
 
+   const renderPreparationList = (instructions: string[]) => {
+      return instructions.map((instruction: string, index) => (
+         <li className={accordionStyles.listItem} key={instruction}>{`${
+            index + 1
+         }. ${instruction}`}</li>
+      ));
+   };
+
    const localHandleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       props.inputValues.setters.additonalInfo(event.target.value);
    };
@@ -125,37 +133,59 @@ const Recipe = (props: RecipeProps) => {
             </div>
          </section>
 
-         {/* accordion */}
-         {generationState === 'success' && (
-            <>
-               {/* ingredients */}
-               <Accordion title="Składniki">
-                  <ol>
-                     <p className={accordionStyles.subTitle}>Ciasto</p>
-                     {renderIngredientList(recipeIngredDough)}
-                  </ol>
-                  <ol>
-                     <p className={accordionStyles.subTitle}>Farsz</p>
-                     {renderIngredientList(recipeIngredFilling)}
-                  </ol>
-               </Accordion>
+         <section style={{ marginTop: '24px', marginBottom: '32px' }}>
+            {/* accordion */}
+            {generationState === 'success' && (
+               <>
+                  {/* ingredients */}
+                  <Accordion title="Składniki">
+                     <ol>
+                        <p className={accordionStyles.subTitle}>Ciasto</p>
+                        {renderIngredientList(recipeIngredDough)}
+                     </ol>
+                     <ol>
+                        <p className={accordionStyles.subTitle}>Farsz</p>
+                        {renderIngredientList(recipeIngredFilling)}
+                     </ol>
+                  </Accordion>
 
-               {/* preparation */}
-               <Accordion title="Przygotowanie">
-                  <ol>
-                     <p className={accordionStyles.subTitle}>Ciasto</p>
-                     {renderIngredientList(recipeIngredDough)}
-                  </ol>
-                  <ol>
-                     <p className={accordionStyles.subTitle}>Farsz</p>
-                     {renderIngredientList(recipeIngredFilling)}
-                  </ol>
-               </Accordion>
-            </>
-         )}
-         {generationState === 'error' && (
-            <p>Oops, try again! (AI did not generate proper object - FIX THIS)</p>
-         )}
+                  {/* preparation */}
+                  <Accordion title="Przygotowanie">
+                     <ol>
+                        <p className={accordionStyles.subTitle}>Ciasto</p>
+                        {renderPreparationList(['Mix flour and water', 'Knead the dough'])}
+                     </ol>
+                     <ol>
+                        <p className={accordionStyles.subTitle}>Farsz</p>
+                        {renderPreparationList(['Cook potatoes', 'Chop onions'])}
+                     </ol>
+                     <ol>
+                        <p className={accordionStyles.subTitle}>Formowanie i gotowanie pierogów:</p>
+                        {renderPreparationList([
+                           'Roll the dough',
+                           'Add filling and shape dumplings',
+                        ])}
+                     </ol>
+                     <ol>
+                        <p className={accordionStyles.subTitle}>Formowanie i gotowanie pierogów:</p>
+                        {renderPreparationList([
+                           'Roll the dough',
+                           'Add filling and shape dumplings',
+                        ])}
+                     </ol>
+                  </Accordion>
+
+                  {/* serving */}
+                  <Accordion title="Podawanie">
+                     <ol>{renderPreparationList(['Boil dumplings', 'Serve hot'])}</ol>
+                  </Accordion>
+               </>
+            )}
+            {generationState === 'error' && (
+               <p>Oops, try again! (AI did not generate proper object - FIX THIS)</p>
+            )}
+         </section>
+         <Button type={ButtonType.Primary}>Udostępnij pieroga</Button>
       </div>
    );
 };
