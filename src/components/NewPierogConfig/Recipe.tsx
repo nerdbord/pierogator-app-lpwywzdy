@@ -6,7 +6,7 @@ import Loader from '../UI/Loader';
 import Button from '../UI/Button';
 import DumplingIcon from '../icons/DumplingIcon';
 import classNames from 'classnames';
-import { generateAIText } from '../../api/client';
+import { generateAIRecipe } from '../../api/client';
 
 interface RecipeProps {
    inputValues: {
@@ -45,19 +45,18 @@ const Recipe = (props: RecipeProps) => {
       }
    }, [props.inputValues.values.additonalInfo, hasMounted]);
 
-   // const handleGenerate = async () => {
-   //    setIsGenerating(true);
-   //    try {
-   //       const response = await generateAIRecipe(props.inputValues.values);
-   //    } catch (error) {
-   //       console.error('Error generating recipe:', error);
-   //    } finally {
-   //       setIsGenerating(false);
-   //    }
-   // };
-
-   const handleGenerate = () => {
+   const handleGenerate = async () => {
       console.log(props.inputValues.values);
+
+      setIsGenerating(true);
+      try {
+         const response = await generateAIRecipe(props.inputValues.values);
+         console.log(response.choices[0].message.content);
+      } catch (error) {
+         console.error('Error generating recipe:', error);
+      } finally {
+         setIsGenerating(false);
+      }
    };
 
    const localHandleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

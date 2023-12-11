@@ -78,7 +78,8 @@ const NewPierog = () => {
    return (
       <>
          <div className={styles.form}>{stepChanger()}</div>
-         {/* <Recipe inputValues={stateProps} nameSettings={nameAndImage.nameSettings} /> */}
+         {/* this is just for testing */}
+         <Recipe inputValues={stateProps} nameSettings={nameAndImage.nameSettings} />
       </>
    );
 };

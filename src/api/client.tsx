@@ -71,3 +71,61 @@ export const generateAIImage = async (values: IngredientValues) => {
       console.error('There was a problem with the fetch operation: ', error);
    }
 };
+
+interface recipeInfo {
+   dough: string;
+   filling: string;
+   ingreds: string;
+   additonalInfo: string;
+}
+
+export const generateAIRecipe = async (allIngredients: recipeInfo) => {
+   const url = 'https://training.nerdbord.io/api/v1/openai/chat/completions';
+   const headers = {
+      Authorization: openAIapiToken,
+      'Content-Type': 'application/json',
+   };
+
+   try {
+      const response = await fetch(url, {
+         method: 'POST',
+         headers: headers,
+         body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [
+               {
+                  role: 'system',
+                  content: `Podaj tylko składniki do wykonania ${allIngredients.dough} w formie listy numerowanej.`,
+               },
+               {
+                  role: 'user',
+                  content: `Podaj składniki do wykonania ${allIngredients.dough}`,
+               },
+            ],
+            // max_tokens: 20,
+            // temperature: 1,
+
+            // returns
+            // "1. 500 g mąki pszennej
+            // 2. 250 ml ciepłej wody
+            // 3. 3 jajka
+            // 4. 1 łyżeczka soli
+            // 5. 2 łyżki oleju roślinnego
+            // 6. 150 g masła, schłodzonego i pokrojonego na małe kawałki
+            // 7. 100 g orzechów włoskich, posiekanych
+            // 8. 100 g cukru brązowego
+            // 9. 1 łyżka cynamonu
+            // 10. 1 łyżka mąki
+            // 11. 1 szczypta soli"
+         }),
+      });
+
+      if (!response.ok) {
+         throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+         return await response.json();
+      }
+   } catch (error) {
+      console.error('There was a problem with the fetch operation: ', error);
+   }
+};
