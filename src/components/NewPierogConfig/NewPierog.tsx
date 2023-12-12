@@ -53,11 +53,14 @@ const NewPierog = () => {
                   pierogSettings={nameAndImage}
                   editable={true}
                />
-               {pierogName && (
-                  <Button type={ButtonType.Primary} onClick={handleSave}>
-                     Zapisz i przejdź do tworzenia przepisu
-                  </Button>
-               )}
+
+               <Button
+                  isDisabled={!pierogName.trim()}
+                  type={ButtonType.Primary}
+                  onClick={handleSave}
+               >
+                  Zapisz i przejdź do tworzenia przepisu
+               </Button>
             </>
          );
       } else {
