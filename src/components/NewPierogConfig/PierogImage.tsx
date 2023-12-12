@@ -16,24 +16,13 @@ interface PierogImageProps {
    };
    newPierogData: PierogData;
    setNewPierogData: React.Dispatch<React.SetStateAction<PierogData>>;
-   pierogSettings: {
-      nameSettings: {
-         value: string;
-         setter: React.Dispatch<React.SetStateAction<string>>;
-      };
-      imageSettings: {
-         value: string;
-         setter: React.Dispatch<React.SetStateAction<string>>;
-      };
-   };
    editable: boolean;
    setEdit?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PierogImage = (props: PierogImageProps) => {
    const [isGenerating, setIsGenerating] = useState(false);
-   const generatedImage = props.pierogSettings.imageSettings.value;
-   const setGeneratedImage = props.pierogSettings.imageSettings.setter;
+   const generatedImage = props.newPierogData.imageSrc;
    const [generatedDescription, setGeneratedDescription] = useState<string | null>(null);
 
    useEffect(() => {
@@ -44,7 +33,6 @@ const PierogImage = (props: PierogImageProps) => {
       setIsGenerating(true);
       try {
          const response = await generateAIImage(props.inputValues);
-         setGeneratedImage(response.data[0].url);
          setGeneratedDescription(response.data[0].revised_prompt);
          props.setNewPierogData((prevState) => {
             return { ...prevState, imageSrc: response.data[0].url };
@@ -95,7 +83,8 @@ const PierogImage = (props: PierogImageProps) => {
          <section className={styles.nameStyle}>
             {generatedImage && (
                <SimpleInput
-                  valueSettings={props.pierogSettings.nameSettings}
+                  pierogSettings={props.newPierogData}
+                  pierogSetters={props.setNewPierogData}
                   placeholder="wpisz nazwę pieroga"
                   disabled={!props.editable}
                />

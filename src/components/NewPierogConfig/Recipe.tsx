@@ -6,12 +6,17 @@ import inputStyles from './../UI/Input.module.css';
 import accordionStyles from './../UI/Accordion.module.css';
 
 import { ButtonType, IngredType } from '../../enums/enums';
-import { generateAIRecipeIngredients } from '../../api/client';
+import {
+   generateAIRecipeIngredients,
+   generateAIRecipePreparation,
+   generateAIRecipeServing,
+} from '../../api/client';
 
 import Loader from '../UI/Loader';
 import Button from '../UI/Button';
 import DumplingIcon from '../icons/DumplingIcon';
 import Accordion from '../UI/Accordion';
+import { PierogData } from '../../interfaces';
 
 interface RecipeProps {
    inputValues: {
@@ -28,10 +33,8 @@ interface RecipeProps {
          additonalInfo: React.Dispatch<React.SetStateAction<string>>;
       };
    };
-   nameSettings: {
-      value: string;
-      setter: React.Dispatch<React.SetStateAction<string>>;
-   };
+   newPierogSettings: PierogData;
+   newPierogSetter: React.Dispatch<React.SetStateAction<PierogData>>;
 }
 
 const Recipe = (props: RecipeProps) => {
@@ -39,6 +42,10 @@ const Recipe = (props: RecipeProps) => {
 
    const [recipeIngredDough, setRecipeIngredDough] = useState([]);
    const [recipeIngredFilling, setRecipeIngredFilling] = useState([]);
+   const [recipePrepDough, setRecipePrepDough] = useState([]);
+   const [recipePrepFilling, setRecipePrepFilling] = useState([]);
+   const [recipePrepForming, setRecipePrepForming] = useState("");
+   const [recipeServing, setRecipeServing] = useState('');
    const [isGenerating, setIsGenerating] = useState(false);
    const [generationState, setGenerationState] = useState('');
 
@@ -55,20 +62,77 @@ const Recipe = (props: RecipeProps) => {
    }, [props.inputValues.values.additonalInfo, hasMounted]);
 
    const generateRecipeIngredients = async () => {
-      const doughResponse = await generateAIRecipeIngredients(
+      const doughIngredientsResponse = await generateAIRecipeIngredients(
          props.inputValues.values.dough,
          IngredType.ciasto,
+         props.inputValues.values.additonalInfo,
       );
-      const fillingResponse = await generateAIRecipeIngredients(
+      const fillingIngredientsResponse = await generateAIRecipeIngredients(
          props.inputValues.values.filling,
          IngredType.nadzienie,
+         props.inputValues.values.additonalInfo,
       );
 
-      console.log(doughResponse.choices[0].message.content);
-      console.log(fillingResponse.choices[0].message.content);
+      const parsedDoughIngreds = JSON.parse(doughIngredientsResponse.choices[0].message.content);
+      const parsedFillingIngreds = JSON.parse(
+         fillingIngredientsResponse.choices[0].message.content,
+      );
 
-      setRecipeIngredDough(JSON.parse(doughResponse.choices[0].message.content));
-      setRecipeIngredFilling(JSON.parse(fillingResponse.choices[0].message.content));
+      props.newPierogSetter((prevValue) => {
+         return {
+            ...prevValue,
+            ingredients: {
+               dough: parsedDoughIngreds,
+               filling: parsedFillingIngreds,
+            },
+         };
+      });
+      setRecipeIngredDough(parsedDoughIngreds);
+      setRecipeIngredFilling(parsedFillingIngreds);
+
+      const doughPrepResponse = await generateAIRecipePreparation(
+         props.inputValues.values.dough,
+         IngredType.ciasto,
+         props.inputValues.values.additonalInfo,
+      );
+      console.log(doughPrepResponse);
+
+      const parsedDoughPrep = doughPrepResponse.choices[0].message.content.split(/\n/)
+      console.log(parsedDoughPrep);
+      setRecipePrepDough(parsedDoughPrep);
+         
+      const fillingPrepResponse = await generateAIRecipePreparation(
+         props.inputValues.values.filling,
+         IngredType.nadzienie,
+         props.inputValues.values.additonalInfo,
+      );
+      console.log(fillingPrepResponse);
+
+      const parsedFillingPrep = fillingPrepResponse.choices[0].message.content.split(/\n/);
+      console.log(parsedFillingPrep);
+      setRecipePrepFilling(parsedFillingPrep);
+      
+      const formingPrepResponse = await generateAIRecipePreparation(
+         recipePrepDough + " " + recipePrepFilling,
+         IngredType.skladniki,
+         props.inputValues.values.additonalInfo,
+      )
+      console.log(formingPrepResponse);
+      
+
+      const parsedFormingPrep = formingPrepResponse.choices[0].message.content.split(/\n/)
+      console.log(parsedFormingPrep);
+      setRecipePrepForming(parsedFormingPrep)
+      
+      const servingResponse = await generateAIRecipeServing(
+         recipePrepDough + " " + recipePrepFilling,
+         props.inputValues.values.additonalInfo
+      )
+      console.log(servingResponse);
+      
+
+      const parsedServingResponse = servingResponse.choices[0].message.content;
+      setRecipeServing(parsedServingResponse)
    };
 
    const handleGenerate = async () => {
@@ -87,8 +151,8 @@ const Recipe = (props: RecipeProps) => {
    const renderIngredientList = (ingredients: any[]) => {
       return ingredients.map((ingred: { name: string; quantity: string }, index) => (
          <li className={accordionStyles.listItem} key={ingred.name}>{`${index + 1}. ${
-            ingred.quantity
-         },  ${ingred.name}`}</li>
+            ingred.name
+         },  ${ingred.quantity}`}</li>
       ));
    };
 
@@ -156,31 +220,21 @@ const Recipe = (props: RecipeProps) => {
                   <Accordion title="Przygotowanie">
                      <ol>
                         <p className={accordionStyles.subTitle}>Ciasto</p>
-                        {renderPreparationList(['Mix flour and water', 'Knead the dough'])}
+                        {renderPreparationList(recipePrepDough)}
                      </ol>
                      <ol>
                         <p className={accordionStyles.subTitle}>Farsz</p>
-                        {renderPreparationList(['Cook potatoes', 'Chop onions'])}
+                        {renderPreparationList(recipePrepFilling)}
                      </ol>
                      <ol>
                         <p className={accordionStyles.subTitle}>Formowanie i gotowanie pierogów:</p>
-                        {renderPreparationList([
-                           'Roll the dough',
-                           'Add filling and shape dumplings',
-                        ])}
-                     </ol>
-                     <ol>
-                        <p className={accordionStyles.subTitle}>Formowanie i gotowanie pierogów:</p>
-                        {renderPreparationList([
-                           'Roll the dough',
-                           'Add filling and shape dumplings',
-                        ])}
+                        {renderPreparationList(recipePrepForming)}
                      </ol>
                   </Accordion>
 
                   {/* serving */}
                   <Accordion title="Podawanie">
-                     <ol>{renderPreparationList(['Boil dumplings', 'Serve hot'])}</ol>
+                     <ol>{renderPreparationList([recipeServing])}</ol>
                   </Accordion>
                </>
             )}
