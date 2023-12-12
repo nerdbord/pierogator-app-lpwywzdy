@@ -184,7 +184,7 @@ export const generateAIRecipePreparation = async (
                   content: specificIngredient(),
                },
             ],
-            max_tokens: 150,
+            // max_tokens: 150,
             temperature: 1,
          }),
       });

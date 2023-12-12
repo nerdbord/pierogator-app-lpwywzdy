@@ -44,7 +44,7 @@ const Recipe = (props: RecipeProps) => {
    const [recipeIngredFilling, setRecipeIngredFilling] = useState([]);
    const [recipePrepDough, setRecipePrepDough] = useState([]);
    const [recipePrepFilling, setRecipePrepFilling] = useState([]);
-   const [recipePrepForming, setRecipePrepForming] = useState('');
+   const [recipePrepForming, setRecipePrepForming] = useState<string[]>([]);
    const [recipeServing, setRecipeServing] = useState('');
    const [isGenerating, setIsGenerating] = useState(false);
    const [generationState, setGenerationState] = useState('');
@@ -95,10 +95,8 @@ const Recipe = (props: RecipeProps) => {
          IngredType.ciasto,
          props.inputValues.values.additonalInfo,
       );
-      console.log(doughPrepResponse);
 
       const parsedDoughPrep = doughPrepResponse.choices[0].message.content.split(/\n/);
-      console.log(parsedDoughPrep);
       setRecipePrepDough(parsedDoughPrep);
 
       const fillingPrepResponse = await generateAIRecipePreparation(
@@ -106,10 +104,8 @@ const Recipe = (props: RecipeProps) => {
          IngredType.nadzienie,
          props.inputValues.values.additonalInfo,
       );
-      console.log(fillingPrepResponse);
 
       const parsedFillingPrep = fillingPrepResponse.choices[0].message.content.split(/\n/);
-      console.log(parsedFillingPrep);
       setRecipePrepFilling(parsedFillingPrep);
 
       const formingPrepResponse = await generateAIRecipePreparation(
@@ -117,17 +113,14 @@ const Recipe = (props: RecipeProps) => {
          IngredType.skladniki,
          props.inputValues.values.additonalInfo,
       );
-      console.log(formingPrepResponse);
 
       const parsedFormingPrep = formingPrepResponse.choices[0].message.content.split(/\n/);
-      console.log(parsedFormingPrep);
       setRecipePrepForming(parsedFormingPrep);
 
       const servingResponse = await generateAIRecipeServing(
          recipePrepDough + ' ' + recipePrepFilling,
          props.inputValues.values.additonalInfo,
       );
-      console.log(servingResponse);
 
       const parsedServingResponse = servingResponse.choices[0].message.content;
       setRecipeServing(parsedServingResponse);
@@ -143,12 +136,7 @@ const Recipe = (props: RecipeProps) => {
             },
          };
       });
-
-      console.log("HAHAHAHAHAHAHHAHAHAHA", props.newPierogSettings);
-      
-
    };
-
 
    const handleGenerate = async () => {
       setIsGenerating(true);
@@ -172,10 +160,10 @@ const Recipe = (props: RecipeProps) => {
    };
 
    const renderPreparationList = (instructions: string[]) => {
-      return instructions.map((instruction: string, index) => (
-         <li className={accordionStyles.listItem} key={instruction}>{`${
-            index + 1
-         }. ${instruction}`}</li>
+      return instructions.map((instruction: string) => (
+         <li className={accordionStyles.listItem} key={instruction}>
+            {instruction}
+         </li>
       ));
    };
 

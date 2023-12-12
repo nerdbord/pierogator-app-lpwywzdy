@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ButtonType } from '../../enums/enums';
 import Button from '../UI/Button';
 import Loader from '../UI/Loader';
@@ -24,10 +24,6 @@ const PierogImage = (props: PierogImageProps) => {
    const [isGenerating, setIsGenerating] = useState(false);
    const generatedImage = props.newPierogData.imageSrc;
    const [generatedDescription, setGeneratedDescription] = useState<string | null>(null);
-
-   useEffect(() => {
-      console.log(props.newPierogData);
-   }, [props.newPierogData]);
 
    const handleGenerate = async () => {
       setIsGenerating(true);

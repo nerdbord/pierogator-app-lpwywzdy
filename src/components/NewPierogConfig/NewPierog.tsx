@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './NewPierog.module.css';
 
 // components
@@ -32,7 +32,6 @@ const NewPierog = () => {
 
    const [newPierogData, setNewPierogData] = useState<PierogData>(initialPierogData);
 
-
    const [ingredientStep, setIngredientStep] = useState(true);
 
    const stateProps = {
@@ -50,14 +49,9 @@ const NewPierog = () => {
       },
    };
 
-
    const handleSave = () => {
       setIngredientStep(false);
    };
-
-   useEffect(() => {
-      console.log(newPierogData);
-   }, [newPierogData]);
 
    const stepChanger = () => {
       if (ingredientStep) {
