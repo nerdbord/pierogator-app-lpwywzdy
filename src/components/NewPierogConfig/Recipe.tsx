@@ -188,7 +188,9 @@ const Recipe = (props: RecipeProps) => {
                <p>Oops, try again! (AI did not generate proper object - FIX THIS)</p>
             )}
          </section>
-         <Button type={ButtonType.Primary}>Udostępnij pieroga</Button>
+         {generationState === 'success' && (
+            <Button type={ButtonType.Primary}>Udostępnij pieroga</Button>
+         )}
       </div>
    );
 };
