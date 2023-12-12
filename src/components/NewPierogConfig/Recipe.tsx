@@ -44,7 +44,7 @@ const Recipe = (props: RecipeProps) => {
    const [recipeIngredFilling, setRecipeIngredFilling] = useState([]);
    const [recipePrepDough, setRecipePrepDough] = useState([]);
    const [recipePrepFilling, setRecipePrepFilling] = useState([]);
-   const [recipePrepForming, setRecipePrepForming] = useState("");
+   const [recipePrepForming, setRecipePrepForming] = useState('');
    const [recipeServing, setRecipeServing] = useState('');
    const [isGenerating, setIsGenerating] = useState(false);
    const [generationState, setGenerationState] = useState('');
@@ -97,10 +97,10 @@ const Recipe = (props: RecipeProps) => {
       );
       console.log(doughPrepResponse);
 
-      const parsedDoughPrep = doughPrepResponse.choices[0].message.content.split(/\n/)
+      const parsedDoughPrep = doughPrepResponse.choices[0].message.content.split(/\n/);
       console.log(parsedDoughPrep);
       setRecipePrepDough(parsedDoughPrep);
-         
+
       const fillingPrepResponse = await generateAIRecipePreparation(
          props.inputValues.values.filling,
          IngredType.nadzienie,
@@ -111,29 +111,44 @@ const Recipe = (props: RecipeProps) => {
       const parsedFillingPrep = fillingPrepResponse.choices[0].message.content.split(/\n/);
       console.log(parsedFillingPrep);
       setRecipePrepFilling(parsedFillingPrep);
-      
+
       const formingPrepResponse = await generateAIRecipePreparation(
-         recipePrepDough + " " + recipePrepFilling,
+         recipePrepDough + ' ' + recipePrepFilling,
          IngredType.skladniki,
          props.inputValues.values.additonalInfo,
-      )
+      );
       console.log(formingPrepResponse);
-      
 
-      const parsedFormingPrep = formingPrepResponse.choices[0].message.content.split(/\n/)
+      const parsedFormingPrep = formingPrepResponse.choices[0].message.content.split(/\n/);
       console.log(parsedFormingPrep);
-      setRecipePrepForming(parsedFormingPrep)
-      
+      setRecipePrepForming(parsedFormingPrep);
+
       const servingResponse = await generateAIRecipeServing(
-         recipePrepDough + " " + recipePrepFilling,
-         props.inputValues.values.additonalInfo
-      )
+         recipePrepDough + ' ' + recipePrepFilling,
+         props.inputValues.values.additonalInfo,
+      );
       console.log(servingResponse);
-      
 
       const parsedServingResponse = servingResponse.choices[0].message.content;
-      setRecipeServing(parsedServingResponse)
+      setRecipeServing(parsedServingResponse);
+
+      props.newPierogSetter((prevValue) => {
+         return {
+            ...prevValue,
+            instructions: {
+               dough_preparation: parsedDoughPrep,
+               filling_preparation: parsedFillingPrep,
+               forming_and_cooking_dumplings: parsedFormingPrep,
+               serving: parsedServingResponse,
+            },
+         };
+      });
+
+      console.log("HAHAHAHAHAHAHHAHAHAHA", props.newPierogSettings);
+      
+
    };
+
 
    const handleGenerate = async () => {
       setIsGenerating(true);

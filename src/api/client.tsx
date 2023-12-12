@@ -171,6 +171,10 @@ export const generateAIRecipePreparation = async (
                },
                {
                   role: 'system',
+                  content: `nie numeruj kroków`,
+               },
+               {
+                  role: 'system',
                   content: `${
                      additionalInfo ? ' dodatkowe uwagi do przepisu: ' + additionalInfo : ''
                   }`,
