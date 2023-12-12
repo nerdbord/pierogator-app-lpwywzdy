@@ -64,6 +64,9 @@ const Recipe = (props: RecipeProps) => {
          IngredType.nadzienie,
       );
 
+      console.log(doughResponse.choices[0].message.content);
+      console.log(fillingResponse.choices[0].message.content);
+
       setRecipeIngredDough(JSON.parse(doughResponse.choices[0].message.content));
       setRecipeIngredFilling(JSON.parse(fillingResponse.choices[0].message.content));
    };

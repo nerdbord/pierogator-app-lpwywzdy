@@ -89,16 +89,14 @@ export const generateAIRecipeIngredients = async (description: string, ingred: I
                {
                   role: 'system',
                   // content: `Podaj tylko składniki wraz z ilościami w formie listy numerowanej.`,
-                  content: `Podaj tylko składniki wraz z ilościami w formie tablicy obiektów Java Script i dostarcz go w formie string, usuń wszystkie spacje, które nie należą do wartości: 
-                  [
-                     {name: nazwa składnika, "quantity": "ilość},
-                  ]`,
+                  content: `Podaj tylko składniki wraz z ilościami w formie tablicy obiektów Java Script, nie wstawiaj znaków nowej lini: 
+                  ${JSON.stringify([{ name: 'nazwa składnika', quantity: 'ilość składnika' }])}`,
                },
                {
                   role: 'user',
                   content: `Podaj składniki do wykonania ${ingred} do pierogów, zgodnie z następującym opisem: ${
                      description || 'tradycyjne'
-                  }`,
+                  }, nie wstawiaj znaków nowej lini.`,
                },
             ],
             // max_tokens: 200,
