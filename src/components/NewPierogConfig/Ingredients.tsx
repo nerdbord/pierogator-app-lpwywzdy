@@ -68,7 +68,6 @@ const Ingredients = (props: IngredientsProps) => {
    const handleGenerate = async () => {
       setIsGenerating(true);
 
-      // throws error couse of new ingred type
       const promises = ingredTypes.map(async (ingredient) => {
          if (getBooleanHelper(ingredient)) return;
          const apiResponse = await generateAIText(ingredient);

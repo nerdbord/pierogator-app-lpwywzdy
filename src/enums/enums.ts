@@ -12,6 +12,4 @@ export enum IngredType {
    ciasto = 'Ciasto',
    nadzienie = 'Nadzienie',
    skladniki = 'Składniki',
-   // this throws error by ingredients.tsx const ingred types
-   uwagi = 'Uwagi',
 }
