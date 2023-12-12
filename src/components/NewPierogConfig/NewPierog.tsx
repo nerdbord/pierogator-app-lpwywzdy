@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './NewPierog.module.css';
 
 // components
@@ -7,6 +7,22 @@ import PierogImage from './PierogImage';
 import Recipe from './Recipe';
 import Button from '../UI/Button';
 import { ButtonType } from '../../enums/enums';
+import { PierogData } from '../../interfaces';
+
+const initialPierogData: PierogData = {
+   name: '',
+   imageSrc: '',
+   ingredients: {
+      dough: [],
+      filling: [],
+   },
+   instructions: {
+      dough_preparation: [],
+      filling_preparation: [],
+      forming_and_cooking_dumplings: [],
+      serving: [],
+   },
+};
 
 const NewPierog = () => {
    const [doughValue, setDoughValue] = useState('');
@@ -14,6 +30,8 @@ const NewPierog = () => {
    const [ingredsValue, setIngredsValue] = useState('');
    const [pierogName, setPierogName] = useState('');
    const [imageData, setImageData] = useState('');
+
+   const [newPierogData, setNewPierogData] = useState<PierogData>(initialPierogData);
 
    const [additonalInfoValue, setAdditionalInfoValue] = useState('');
 
@@ -43,6 +61,10 @@ const NewPierog = () => {
       setIngredientStep(false);
    };
 
+   useEffect(() => {
+      console.log(newPierogData);
+   }, [newPierogData]);
+
    const stepChanger = () => {
       if (ingredientStep) {
          return (
@@ -51,6 +73,8 @@ const NewPierog = () => {
                <PierogImage
                   inputValues={stateProps.values}
                   pierogSettings={nameAndImage}
+                  newPierogData={newPierogData}
+                  setNewPierogData={setNewPierogData}
                   editable={true}
                />
 
@@ -69,6 +93,8 @@ const NewPierog = () => {
          return (
             <>
                <PierogImage
+                  newPierogData={newPierogData}
+                  setNewPierogData={setNewPierogData}
                   inputValues={stateProps.values}
                   pierogSettings={nameAndImage}
                   editable={false}
@@ -84,7 +110,7 @@ const NewPierog = () => {
       <>
          <div className={styles.form}>{stepChanger()}</div>
          {/* this is just for testing */}
-         <Recipe inputValues={stateProps} nameSettings={nameAndImage.nameSettings} />
+         {/* <Recipe inputValues={stateProps} nameSettings={nameAndImage.nameSettings} /> */}
       </>
    );
 };

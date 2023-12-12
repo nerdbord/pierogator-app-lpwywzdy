@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonType } from '../../enums/enums';
 import Button from '../UI/Button';
 import Loader from '../UI/Loader';
@@ -6,6 +6,7 @@ import DumplingIcon from '../icons/DumplingIcon';
 import styles from './NewPierog.module.css';
 import { generateAIImage } from '../../api/client';
 import SimpleInput from '../UI/SimpleInput';
+import { PierogData } from '../../interfaces';
 
 interface PierogImageProps {
    inputValues: {
@@ -13,6 +14,8 @@ interface PierogImageProps {
       filling: string;
       ingreds: string;
    };
+   newPierogData: PierogData;
+   setNewPierogData: React.Dispatch<React.SetStateAction<PierogData>>;
    pierogSettings: {
       nameSettings: {
          value: string;
@@ -33,12 +36,19 @@ const PierogImage = (props: PierogImageProps) => {
    const setGeneratedImage = props.pierogSettings.imageSettings.setter;
    const [generatedDescription, setGeneratedDescription] = useState<string | null>(null);
 
+   useEffect(() => {
+      console.log(props.newPierogData);
+   }, [props.newPierogData]);
+
    const handleGenerate = async () => {
       setIsGenerating(true);
       try {
          const response = await generateAIImage(props.inputValues);
          setGeneratedImage(response.data[0].url);
          setGeneratedDescription(response.data[0].revised_prompt);
+         props.setNewPierogData((prevState) => {
+            return { ...prevState, imageSrc: response.data[0].url };
+         });
       } catch (error) {
          console.error('Error generating image:', error);
       } finally {
