@@ -29,6 +29,9 @@ const NewPierog = () => {
    const [fillingValue, setFillingValue] = useState('');
    const [ingredsValue, setIngredsValue] = useState('');
    const [additonalInfoValue, setAdditionalInfoValue] = useState('');
+   const [isGeneratingRecipe, setIsGeneratingRecipe] = useState(false);
+   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+   const [isGeneratingIngredients, setIsGeneratingIngredients] = useState(false);
 
    const [newPierogData, setNewPierogData] = useState<PierogData>(initialPierogData);
 
@@ -57,17 +60,28 @@ const NewPierog = () => {
       if (ingredientStep) {
          return (
             <>
-               <Ingredients inputValues={stateProps} />
+               <Ingredients
+                  inputValues={stateProps}
+                  isGeneratingIngredients={isGeneratingIngredients}
+                  setIsGeneratingIngredients={setIsGeneratingIngredients}
+                  isGeneratingImage={isGeneratingImage}
+               />
                <PierogImage
                   inputValues={stateProps.values}
                   newPierogData={newPierogData}
                   setNewPierogData={setNewPierogData}
                   editable={true}
+                  isGeneratingRecipe={isGeneratingRecipe}
+                  isGeneratingIngredients={isGeneratingIngredients}
+                  isGeneratingImage={isGeneratingImage}
+                  setIsGeneratingImage={setIsGeneratingImage}
                />
 
                {newPierogData.imageSrc && (
                   <Button
-                     isDisabled={!newPierogData.name.trim()}
+                     isDisabled={
+                        !newPierogData.name.trim() || isGeneratingImage || isGeneratingIngredients
+                     }
                      type={ButtonType.Primary}
                      onClick={handleSave}
                   >
@@ -80,16 +94,22 @@ const NewPierog = () => {
          return (
             <>
                <PierogImage
+                  inputValues={stateProps.values}
                   newPierogData={newPierogData}
                   setNewPierogData={setNewPierogData}
-                  inputValues={stateProps.values}
                   editable={false}
                   setEdit={setIngredientStep}
+                  isGeneratingRecipe={isGeneratingRecipe}
+                  isGeneratingIngredients={isGeneratingIngredients}
+                  isGeneratingImage={isGeneratingImage}
+                  setIsGeneratingImage={setIsGeneratingImage}
                />
                <Recipe
                   inputValues={stateProps}
                   newPierogSetter={setNewPierogData}
                   newPierogSettings={newPierogData}
+                  isGeneratingRecipe={isGeneratingRecipe}
+                  setIsGeneratingRecipe={setIsGeneratingRecipe}
                />
             </>
          );

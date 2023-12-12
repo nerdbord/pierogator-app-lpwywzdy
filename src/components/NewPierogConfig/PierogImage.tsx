@@ -18,15 +18,18 @@ interface PierogImageProps {
    setNewPierogData: React.Dispatch<React.SetStateAction<PierogData>>;
    editable: boolean;
    setEdit?: React.Dispatch<React.SetStateAction<boolean>>;
+   isGeneratingRecipe: boolean;
+   isGeneratingIngredients: boolean;
+   isGeneratingImage: boolean;
+   setIsGeneratingImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PierogImage = (props: PierogImageProps) => {
-   const [isGenerating, setIsGenerating] = useState(false);
    const generatedImage = props.newPierogData.imageSrc;
    const [generatedDescription, setGeneratedDescription] = useState<string | null>(null);
 
    const handleGenerate = async () => {
-      setIsGenerating(true);
+      props.setIsGeneratingImage(true);
       try {
          const response = await generateAIImage(props.inputValues);
          setGeneratedDescription(response.data[0].revised_prompt);
@@ -36,7 +39,7 @@ const PierogImage = (props: PierogImageProps) => {
       } catch (error) {
          console.error('Error generating image:', error);
       } finally {
-         setIsGenerating(false);
+         props.setIsGeneratingImage(false);
       }
    };
 
@@ -55,12 +58,16 @@ const PierogImage = (props: PierogImageProps) => {
                <DumplingIcon /> Pieróg
             </h2>
             <div className={styles.formHeaderButtonSection}>
-               {isGenerating && <Loader />}
+               {props.isGeneratingImage && <Loader />}
                {
                   <Button
                      type={ButtonType.Secondary}
                      onClick={handleButtonClick}
-                     isDisabled={isGenerating}
+                     isDisabled={
+                        props.isGeneratingIngredients ||
+                        props.isGeneratingImage ||
+                        props.isGeneratingRecipe
+                     }
                   >
                      {props.editable ? 'Generuj' : 'Zmień'}
                   </Button>
