@@ -13,7 +13,7 @@
    align-items: flex-start;
    gap: 12px;
    border-radius: 4px;
-   border: 1px solid;
+   border: 1px solid var(--color-gray-light);
 }
 
 .inputTopWrapper:last-child {
@@ -25,7 +25,7 @@
 }
 
 .unlockedStyle {
-   border-color: var(--color-gray);
+   border-color: var(--color-gray-light);
 }
 
 .iconWrapper {
@@ -57,6 +57,6 @@
    color: var(--color-gray-dark);
 }
 
-.simpleInputStyle{
-   height: 20px
+.simpleInputStyle {
+   height: 20px;
 }

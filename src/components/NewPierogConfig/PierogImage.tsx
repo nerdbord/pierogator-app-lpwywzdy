@@ -6,6 +6,7 @@ import DumplingIcon from '../icons/DumplingIcon';
 import styles from './NewPierog.module.css';
 import { generateAIImage } from '../../api/client';
 import SimpleInput from '../UI/SimpleInput';
+import { PierogData } from '../../interfaces';
 
 interface PierogImageProps {
    inputValues: {
@@ -13,32 +14,25 @@ interface PierogImageProps {
       filling: string;
       ingreds: string;
    };
-   pierogSettings: {
-      nameSettings: {
-         value: string;
-         setter: React.Dispatch<React.SetStateAction<string>>;
-      };
-      imageSettings: {
-         value: string;
-         setter: React.Dispatch<React.SetStateAction<string>>;
-      };
-   };
+   newPierogData: PierogData;
+   setNewPierogData: React.Dispatch<React.SetStateAction<PierogData>>;
    editable: boolean;
-   setEdit?:  React.Dispatch<React.SetStateAction<boolean>>
+   setEdit?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PierogImage = (props: PierogImageProps) => {
    const [isGenerating, setIsGenerating] = useState(false);
-   const generatedImage = props.pierogSettings.imageSettings.value;
-   const setGeneratedImage = props.pierogSettings.imageSettings.setter;
+   const generatedImage = props.newPierogData.imageSrc;
    const [generatedDescription, setGeneratedDescription] = useState<string | null>(null);
 
    const handleGenerate = async () => {
       setIsGenerating(true);
       try {
          const response = await generateAIImage(props.inputValues);
-         setGeneratedImage(response.data[0].url);
          setGeneratedDescription(response.data[0].revised_prompt);
+         props.setNewPierogData((prevState) => {
+            return { ...prevState, imageSrc: response.data[0].url };
+         });
       } catch (error) {
          console.error('Error generating image:', error);
       } finally {
@@ -48,11 +42,11 @@ const PierogImage = (props: PierogImageProps) => {
 
    const handleButtonClick = () => {
       if (props.editable) {
-         handleGenerate()
-      } else{
+         handleGenerate();
+      } else {
          props.setEdit && props.setEdit(true);
       }
-   }
+   };
 
    return (
       <>
@@ -62,15 +56,15 @@ const PierogImage = (props: PierogImageProps) => {
             </h2>
             <div className={styles.formHeaderButtonSection}>
                {isGenerating && <Loader />}
-               {(
+               {
                   <Button
                      type={ButtonType.Secondary}
                      onClick={handleButtonClick}
                      isDisabled={isGenerating}
                   >
-                     {props.editable ? "Generuj" : "Zmień"}
+                     {props.editable ? 'Generuj' : 'Zmień'}
                   </Button>
-               )}
+               }
             </div>
          </div>
          <section className={styles.imageSection}>
@@ -85,7 +79,8 @@ const PierogImage = (props: PierogImageProps) => {
          <section className={styles.nameStyle}>
             {generatedImage && (
                <SimpleInput
-                  valueSettings={props.pierogSettings.nameSettings}
+                  pierogSettings={props.newPierogData}
+                  pierogSetters={props.setNewPierogData}
                   placeholder="wpisz nazwę pieroga"
                   disabled={!props.editable}
                />

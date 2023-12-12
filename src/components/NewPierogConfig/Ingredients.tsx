@@ -73,11 +73,11 @@ const Ingredients = (props: IngredientsProps) => {
          const apiResponse = await generateAIText(ingredient);
          const newValue = apiResponse.choices[0].message.content;
          setValueHelper(ingredient, newValue);
-      },);
+      });
 
-      await Promise.all(promises)
+      await Promise.all(promises);
 
-      setIsGenerating(false)
+      setIsGenerating(false);
    };
 
    const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>, ingredient: IngredType) => {
@@ -93,7 +93,11 @@ const Ingredients = (props: IngredientsProps) => {
             </h2>
             <div className={styles.formHeaderButtonSection}>
                {isGenerating && <Loader />}
-               <Button type={ButtonType.Secondary} onClick={handleGenerate} isDisabled={isGenerating}>
+               <Button
+                  type={ButtonType.Secondary}
+                  onClick={handleGenerate}
+                  isDisabled={isGenerating}
+               >
                   Generuj
                </Button>
             </div>
