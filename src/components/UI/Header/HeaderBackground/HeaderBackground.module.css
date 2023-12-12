@@ -2,7 +2,7 @@
    width: 100%;
    height: 118px;
    display: flex;
-   background-image:url('../../../../assets/DumplingMachine.jpg');
+   background-image: url('../../../../assets/DumplingMachine.png');
    background-size: cover;
    background-position: center;
 }
@@ -11,8 +11,8 @@
    width: 100%;
    height: 118px;
    display: flex;
-  
-   background-image:url('../../../../assets/DumplingStore.jpg');
+
+   background-image: url('../../../../assets/DumplingStore.png');
    background-size: cover;
    background-position: center;
 }
