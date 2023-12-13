@@ -10,6 +10,7 @@ import {
    generateAIRecipeIngredients,
    generateAIRecipePreparation,
    generateAIRecipeServing,
+   postMyPierog,
 } from '../../api/client';
 
 import Loader from '../UI/Loader';
@@ -173,6 +174,10 @@ const Recipe = (props: RecipeProps) => {
       props.inputValues.setters.additonalInfo(event.target.value);
    };
 
+   const handleSavePierog = () => {
+      postMyPierog(props.newPierogSettings);
+   };
+
    const simpleInputStyles = classNames(inputStyles.inputStyle, inputStyles.simpleInputStyle);
 
    const simpleWrapperStyles = classNames(inputStyles.inputWrapper, inputStyles.simpleWrapper);
@@ -252,7 +257,9 @@ const Recipe = (props: RecipeProps) => {
             )}
          </section>
          {generationState === 'success' && (
-            <Button type={ButtonType.Primary}>Udostępnij pieroga</Button>
+            <Button type={ButtonType.Primary} onClick={handleSavePierog}>
+               Udostępnij pieroga
+            </Button>
          )}
       </div>
    );
