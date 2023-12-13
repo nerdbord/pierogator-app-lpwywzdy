@@ -38,6 +38,7 @@ interface RecipeProps {
    newPierogSetter: React.Dispatch<React.SetStateAction<PierogData>>;
    isGeneratingRecipe: boolean;
    setIsGeneratingRecipe: React.Dispatch<React.SetStateAction<boolean>>;
+   newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Recipe = (props: RecipeProps) => {
@@ -49,7 +50,7 @@ const Recipe = (props: RecipeProps) => {
    const [recipePrepFilling, setRecipePrepFilling] = useState([]);
    const [recipePrepForming, setRecipePrepForming] = useState<string[]>([]);
    const [recipeServing, setRecipeServing] = useState('');
-   // const [isGenerating, setIsGenerating] = useState(false);
+   const [isUploading, setIsUploading] = useState(false);
    const [generationState, setGenerationState] = useState('');
 
    const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -174,8 +175,16 @@ const Recipe = (props: RecipeProps) => {
       props.inputValues.setters.additonalInfo(event.target.value);
    };
 
-   const handleSavePierog = () => {
-      postMyPierog(props.newPierogSettings);
+   const handleSavePierog = async () => {
+      setIsUploading(true);
+      try {
+         await postMyPierog(props.newPierogSettings);
+         setIsUploading(false);
+      } catch (error) {
+         console.log(error);
+      } finally{
+         props.newPierogToggleSet(false)
+      }
    };
 
    const simpleInputStyles = classNames(inputStyles.inputStyle, inputStyles.simpleInputStyle);
@@ -257,7 +266,7 @@ const Recipe = (props: RecipeProps) => {
             )}
          </section>
          {generationState === 'success' && (
-            <Button type={ButtonType.Primary} onClick={handleSavePierog}>
+            <Button type={ButtonType.Primary} onClick={handleSavePierog} isDisabled={isUploading}>
                Udostępnij pieroga
             </Button>
          )}

@@ -37,15 +37,16 @@ const PierogarniaContainer = (props: PierogarniaContainerProps) => {
       fetchData();
    }, []);
 
-   
-
    return (
       <>
          <UserPierogi
             pierogiDatabase={myPierogiSettings}
             newPierogToggleSet={props.newPierogToggleSet}
          />
-         <Pierogarnia pierogiDatabase={allPierogiDatabase} />
+         <Pierogarnia
+            pierogiDatabase={allPierogiDatabase}
+            newPierogToggleSet={props.newPierogToggleSet}
+         />
       </>
    );
 };

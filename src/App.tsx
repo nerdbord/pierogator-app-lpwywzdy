@@ -8,7 +8,7 @@ import { HeaderType } from './enums/enums';
 import PierogarniaContainer from './components/Pierogarnia/PierogarniaContainer';
 
 const App = () => {
-   const [isCreatingNewPierog, setCreatingNewPierog] = useState(false);
+   const [isCreatingNewPierog, setCreatingNewPierog] = useState(true);
 
    return (
       <div className={styles.mainWrapper}>
@@ -16,7 +16,7 @@ const App = () => {
             type={isCreatingNewPierog ? HeaderType.machine : HeaderType.store}
          ></HeaderBackground>
          <div className={styles.appWrapper}>
-         {isCreatingNewPierog ? <NewPierog /> : <PierogarniaContainer newPierogToggleSet={setCreatingNewPierog} />}
+         {isCreatingNewPierog ? <NewPierog newPierogToggleSet={setCreatingNewPierog} /> : <PierogarniaContainer newPierogToggleSet={setCreatingNewPierog} />}
          </div>
       </div>
    );

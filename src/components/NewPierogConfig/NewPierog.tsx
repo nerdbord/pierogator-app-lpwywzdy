@@ -24,7 +24,11 @@ const initialPierogData: PierogData = {
    },
 };
 
-const NewPierog = () => {
+interface NewPierogProps {
+   newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NewPierog = (props: NewPierogProps) => {
    const [doughValue, setDoughValue] = useState("");
    const [fillingValue, setFillingValue] = useState( '');
    const [ingredsValue, setIngredsValue] = useState('');
@@ -113,6 +117,7 @@ const NewPierog = () => {
                   newPierogSettings={newPierogData}
                   isGeneratingRecipe={isGeneratingRecipe}
                   setIsGeneratingRecipe={setIsGeneratingRecipe}
+                  newPierogToggleSet={props.newPierogToggleSet}
                />
             </>
          );
