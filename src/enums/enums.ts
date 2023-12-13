@@ -8,6 +8,11 @@ export enum ButtonType {
    Secondary = 'secondary',
 }
 
+export enum HeaderType {
+   machine = 'machine',
+   store = 'store',
+}
+
 export enum IngredType {
    ciasto = 'Ciasto',
    nadzienie = 'Nadzienie',

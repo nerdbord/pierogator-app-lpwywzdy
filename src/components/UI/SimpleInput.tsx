@@ -1,42 +1,35 @@
+import { PierogData } from '../../interfaces';
 import styles from './Input.module.css';
 import classNames from 'classnames';
 
 interface SimpleInputProps {
-    valueSettings: {
-        value: string;
-        setter: React.Dispatch<React.SetStateAction<string>>;
-     };
-     placeholder: string;
-     maxLen?: number
-     disabled?: boolean;
+   pierogSettings: PierogData;
+   pierogSetters: React.Dispatch<React.SetStateAction<PierogData>>;
+   placeholder: string;
+   disabled?: boolean;
 }
 
 const SimpleInput = (props: SimpleInputProps) => {
-   const localHandleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    props.valueSettings.setter(event.target.value)
+   const localHandleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+      props.pierogSetters((prevState) => {
+         return { ...prevState, name: event.target.value };
+      });
    };
 
+   const simpleInputStyles = classNames(styles.inputStyle, styles.simpleInputStyle);
 
-   const simpleInputStyles = classNames(
-    styles.inputStyle,
-    styles.simpleInputStyle
-   )
-
-   const simpleWrapperStyles = classNames(
-    styles.inputWrapper,
-    styles.simpleWrapper,
-   )
-
+   const simpleWrapperStyles = classNames(styles.inputWrapper, styles.simpleWrapper);
 
    return (
       <div className={styles.inputTopWrapper}>
          <h3 className={styles.titleStyle}>Nazwa</h3>
          <div className={simpleWrapperStyles}>
-            <textarea
+            <input
+               type="text"
                disabled={props.disabled}
                onChange={localHandleInput}
                className={simpleInputStyles}
-               value={props.valueSettings.value}
+               value={props.pierogSettings.name}
                placeholder={props.placeholder}
                maxLength={props.maxLen || 50}
             />

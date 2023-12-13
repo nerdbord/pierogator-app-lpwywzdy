@@ -20,6 +20,9 @@ interface IngredientsProps {
          ingreds: React.Dispatch<React.SetStateAction<string>>;
       };
    };
+   isGeneratingIngredients: boolean;
+   setIsGeneratingIngredients: React.Dispatch<React.SetStateAction<boolean>>;
+   isGeneratingImage: boolean;
 }
 
 const Ingredients = (props: IngredientsProps) => {
@@ -31,8 +34,6 @@ const Ingredients = (props: IngredientsProps) => {
       values: { dough: doughValue, filling: fillingValue, ingreds: ingredsValue },
       setters: { dough: setDoughValue, filling: setFillingValue, ingreds: setIngredsValue },
    } = props.inputValues;
-
-   const [isGenerating, setIsGenerating] = useState(false);
 
    const ingredTypes = Object.values(IngredType);
 
@@ -66,18 +67,18 @@ const Ingredients = (props: IngredientsProps) => {
    };
 
    const handleGenerate = async () => {
-      setIsGenerating(true);
+      props.setIsGeneratingIngredients(true);
 
       const promises = ingredTypes.map(async (ingredient) => {
          if (getBooleanHelper(ingredient)) return;
          const apiResponse = await generateAIText(ingredient);
          const newValue = apiResponse.choices[0].message.content;
          setValueHelper(ingredient, newValue);
-      },);
+      });
 
-      await Promise.all(promises)
+      await Promise.all(promises);
 
-      setIsGenerating(false)
+      props.setIsGeneratingIngredients(false);
    };
 
    const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>, ingredient: IngredType) => {
@@ -92,8 +93,12 @@ const Ingredients = (props: IngredientsProps) => {
                <DumplingIcon /> Składniki
             </h2>
             <div className={styles.formHeaderButtonSection}>
-               {isGenerating && <Loader />}
-               <Button type={ButtonType.Secondary} onClick={handleGenerate} isDisabled={isGenerating}>
+               {props.isGeneratingIngredients && <Loader />}
+               <Button
+                  type={ButtonType.Secondary}
+                  onClick={handleGenerate}
+                  isDisabled={props.isGeneratingIngredients || props.isGeneratingImage}
+               >
                   Generuj
                </Button>
             </div>
