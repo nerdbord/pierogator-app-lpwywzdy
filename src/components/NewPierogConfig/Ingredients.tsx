@@ -109,6 +109,7 @@ const Ingredients = (props: IngredientsProps) => {
                displayValue={doughValue}
                isLocked={doughLocked}
                setLocked={setDoughLocked}
+               disabled={props.isGeneratingIngredients || props.isGeneratingImage}
                handleInput={handleInput}
             />
             <IngredientInput
@@ -116,6 +117,7 @@ const Ingredients = (props: IngredientsProps) => {
                displayValue={fillingValue}
                isLocked={fillingLocked}
                setLocked={setFillingLocked}
+               disabled={props.isGeneratingIngredients || props.isGeneratingImage}
                handleInput={handleInput}
             />
             <IngredientInput
@@ -123,6 +125,7 @@ const Ingredients = (props: IngredientsProps) => {
                displayValue={ingredsValue}
                isLocked={ingredsLocked}
                setLocked={setIngredsLocked}
+               disabled={props.isGeneratingIngredients || props.isGeneratingImage}
                handleInput={handleInput}
             />
          </section>

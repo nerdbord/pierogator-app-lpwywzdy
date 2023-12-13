@@ -39,6 +39,8 @@ interface RecipeProps {
    isGeneratingRecipe: boolean;
    setIsGeneratingRecipe: React.Dispatch<React.SetStateAction<boolean>>;
    newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
+   isUploadingPierog: boolean;
+   setIsUploadingPierog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Recipe = (props: RecipeProps) => {
@@ -50,7 +52,7 @@ const Recipe = (props: RecipeProps) => {
    const [recipePrepFilling, setRecipePrepFilling] = useState([]);
    const [recipePrepForming, setRecipePrepForming] = useState<string[]>([]);
    const [recipeServing, setRecipeServing] = useState('');
-   const [isUploading, setIsUploading] = useState(false);
+
    const [generationState, setGenerationState] = useState('');
 
    const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -176,10 +178,10 @@ const Recipe = (props: RecipeProps) => {
    };
 
    const handleSavePierog = async () => {
-      setIsUploading(true);
+      props.setIsUploadingPierog(true);
       try {
          await postMyPierog(props.newPierogSettings);
-         setIsUploading(false);
+         props.setIsUploadingPierog(false);
       } catch (error) {
          console.log(error);
       } finally {
@@ -200,7 +202,7 @@ const Recipe = (props: RecipeProps) => {
             <div className={styles.formHeaderButtonSection}>
                {props.isGeneratingRecipe && <Loader />}
                <Button
-                  isDisabled={props.isGeneratingRecipe}
+                  isDisabled={props.isGeneratingRecipe || props.isUploadingPierog}
                   type={ButtonType.Secondary}
                   onClick={handleGenerate}
                >
@@ -213,6 +215,7 @@ const Recipe = (props: RecipeProps) => {
                <h3 className={inputStyles.titleStyle}>Uwagi do przepisu</h3>
                <div className={simpleWrapperStyles}>
                   <textarea
+                     disabled={props.isGeneratingRecipe || props.isUploadingPierog}
                      ref={inputRef}
                      onChange={localHandleInput}
                      className={simpleInputStyles}
@@ -266,7 +269,11 @@ const Recipe = (props: RecipeProps) => {
             )}
          </section>
          {generationState === 'success' && (
-            <Button type={ButtonType.Primary} onClick={handleSavePierog} isDisabled={isUploading}>
+            <Button
+               type={ButtonType.Primary}
+               onClick={handleSavePierog}
+               isDisabled={props.isUploadingPierog || props.isGeneratingRecipe}
+            >
                Udostępnij pieroga
             </Button>
          )}

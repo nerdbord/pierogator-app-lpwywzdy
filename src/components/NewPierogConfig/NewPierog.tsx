@@ -36,6 +36,7 @@ const NewPierog = (props: NewPierogProps) => {
    const [isGeneratingRecipe, setIsGeneratingRecipe] = useState(false);
    const [isGeneratingImage, setIsGeneratingImage] = useState(false);
    const [isGeneratingIngredients, setIsGeneratingIngredients] = useState(false);
+   const [isUploadingPierog, setIsUploadingPierog] = useState(false);
 
    const [newPierogData, setNewPierogData] = useState<PierogData>(initialPierogData);
 
@@ -79,6 +80,7 @@ const NewPierog = (props: NewPierogProps) => {
                   isGeneratingIngredients={isGeneratingIngredients}
                   isGeneratingImage={isGeneratingImage}
                   setIsGeneratingImage={setIsGeneratingImage}
+                  isUploadingPierog={isUploadingPierog}
                />
 
                {newPierogData.imageSrc && (
@@ -107,6 +109,7 @@ const NewPierog = (props: NewPierogProps) => {
                   isGeneratingIngredients={isGeneratingIngredients}
                   isGeneratingImage={isGeneratingImage}
                   setIsGeneratingImage={setIsGeneratingImage}
+                  isUploadingPierog={isUploadingPierog}
                />
                <Recipe
                   inputValues={stateProps}
@@ -115,6 +118,8 @@ const NewPierog = (props: NewPierogProps) => {
                   isGeneratingRecipe={isGeneratingRecipe}
                   setIsGeneratingRecipe={setIsGeneratingRecipe}
                   newPierogToggleSet={props.newPierogToggleSet}
+                  isUploadingPierog={isUploadingPierog}
+                  setIsUploadingPierog={setIsUploadingPierog}
                />
             </>
          );
