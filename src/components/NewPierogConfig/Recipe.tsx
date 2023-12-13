@@ -10,6 +10,7 @@ import {
    generateAIRecipeIngredients,
    generateAIRecipePreparation,
    generateAIRecipeServing,
+   postMyPierog,
 } from '../../api/client';
 
 import Loader from '../UI/Loader';
@@ -35,6 +36,8 @@ interface RecipeProps {
    };
    newPierogSettings: PierogData;
    newPierogSetter: React.Dispatch<React.SetStateAction<PierogData>>;
+   isGeneratingRecipe: boolean;
+   setIsGeneratingRecipe: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Recipe = (props: RecipeProps) => {
@@ -46,7 +49,7 @@ const Recipe = (props: RecipeProps) => {
    const [recipePrepFilling, setRecipePrepFilling] = useState([]);
    const [recipePrepForming, setRecipePrepForming] = useState<string[]>([]);
    const [recipeServing, setRecipeServing] = useState('');
-   const [isGenerating, setIsGenerating] = useState(false);
+   // const [isGenerating, setIsGenerating] = useState(false);
    const [generationState, setGenerationState] = useState('');
 
    const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -139,7 +142,7 @@ const Recipe = (props: RecipeProps) => {
    };
 
    const handleGenerate = async () => {
-      setIsGenerating(true);
+      props.setIsGeneratingRecipe(true);
       try {
          await generateRecipeIngredients();
          setGenerationState('success');
@@ -147,7 +150,7 @@ const Recipe = (props: RecipeProps) => {
          console.error('Error generating recipe:', error);
          setGenerationState('error');
       } finally {
-         setIsGenerating(false);
+         props.setIsGeneratingRecipe(false);
       }
    };
 
@@ -171,6 +174,10 @@ const Recipe = (props: RecipeProps) => {
       props.inputValues.setters.additonalInfo(event.target.value);
    };
 
+   const handleSavePierog = () => {
+      postMyPierog(props.newPierogSettings);
+   };
+
    const simpleInputStyles = classNames(inputStyles.inputStyle, inputStyles.simpleInputStyle);
 
    const simpleWrapperStyles = classNames(inputStyles.inputWrapper, inputStyles.simpleWrapper);
@@ -182,8 +189,12 @@ const Recipe = (props: RecipeProps) => {
                <DumplingIcon /> Przepis
             </h2>
             <div className={styles.formHeaderButtonSection}>
-               {isGenerating && <Loader />}
-               <Button type={ButtonType.Secondary} onClick={handleGenerate}>
+               {props.isGeneratingRecipe && <Loader />}
+               <Button
+                  isDisabled={props.isGeneratingRecipe}
+                  type={ButtonType.Secondary}
+                  onClick={handleGenerate}
+               >
                   Generuj
                </Button>
             </div>
@@ -246,7 +257,9 @@ const Recipe = (props: RecipeProps) => {
             )}
          </section>
          {generationState === 'success' && (
-            <Button type={ButtonType.Primary}>Udostępnij pieroga</Button>
+            <Button type={ButtonType.Primary} onClick={handleSavePierog}>
+               Udostępnij pieroga
+            </Button>
          )}
       </div>
    );

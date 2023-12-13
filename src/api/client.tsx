@@ -1,8 +1,9 @@
 import { IngredType } from '../enums/enums';
+import { PierogData } from '../interfaces';
 import { ingredientsMessagesHelper } from './clientHelpers';
 
 const openAIapiToken = import.meta.env.VITE_GPT_TOKEN;
-// const nerdyApiToken = import.meta.env.VITE_NERDY_TOKEN;
+const nerdyApiToken = import.meta.env.VITE_NERDY_TOKEN;
 
 export const generateAIText = async (ingredient: IngredType) => {
    const url = 'https://training.nerdbord.io/api/v1/openai/chat/completions';
@@ -240,5 +241,27 @@ export const generateAIRecipeServing = async (description: string, additionalInf
       }
    } catch (error) {
       console.error('There was a problem with the fetch operation: ', error);
+   }
+};
+
+export const postMyPierog = async (newPierogSettings: PierogData) => {
+   const url = 'https://training.nerdbord.io/api/v1/pierogator/dumpling-recipes';
+
+   try {
+      const response = await fetch(url, {
+         method: 'POST',
+         headers: {
+            Authorization: nerdyApiToken,
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(newPierogSettings),
+      });
+
+      if (!response.ok) {
+         throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+   } catch (error) {
+      console.error('Error posting dumpling recipe:', error);
+      throw error;
    }
 };
