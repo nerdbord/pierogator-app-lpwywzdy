@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ButtonType, PierogObject } from '../../enums/enums';
 import Button from '../UI/Button';
 import DumplingIcon from '../icons/DumplingIcon';
@@ -17,6 +16,7 @@ interface UserPierogiProps {
       setDisplayedPierog: React.Dispatch<React.SetStateAction<PierogData>>;
       setIsDisplayingPierog: React.Dispatch<React.SetStateAction<boolean>>;
    };
+   allDatabaseSetter: React.Dispatch<React.SetStateAction<PierogObject[]>>;
 }
 
 const UserPierogi = (props: UserPierogiProps) => {
@@ -48,6 +48,7 @@ const UserPierogi = (props: UserPierogiProps) => {
                         key={i}
                         databaseSetter={pierogiDatabaseSetter}
                         displayedPierogiSettings={props.displayedPierogiSettings}
+                        allDatabaseSetter={props.allDatabaseSetter}
                      />
                   );
                })}

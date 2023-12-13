@@ -12,6 +12,7 @@ interface PierogarniaProps {
       setDisplayedPierog: React.Dispatch<React.SetStateAction<PierogData>>;
       setIsDisplayingPierog: React.Dispatch<React.SetStateAction<boolean>>;
    };
+   allDatabaseSetter: React.Dispatch<React.SetStateAction<PierogObject[]>>;
 }
 
 const Pierogarnia = (props: PierogarniaProps) => {
@@ -25,7 +26,15 @@ const Pierogarnia = (props: PierogarniaProps) => {
          <div className={styles.thumbnailWrapper}>
             {props.pierogiDatabase &&
                props.pierogiDatabase.map((pierog, i) => {
-                  return <PierogThumbnail pierog={pierog} editable={false} key={i} displayedPierogiSettings={props.displayedPierogiSettings} />;
+                  return (
+                     <PierogThumbnail
+                        pierog={pierog}
+                        editable={false}
+                        key={i}
+                        displayedPierogiSettings={props.displayedPierogiSettings}
+                        allDatabaseSetter={props.allDatabaseSetter}
+                     />
+                  );
                })}
          </div>
       </>

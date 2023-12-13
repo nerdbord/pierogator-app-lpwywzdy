@@ -31,7 +31,7 @@ const SimpleInput = (props: SimpleInputProps) => {
                className={simpleInputStyles}
                value={props.pierogSettings.name}
                placeholder={props.placeholder}
-               maxLength={props.maxLen || 50}
+               maxLength={50}
             />
          </div>
       </div>

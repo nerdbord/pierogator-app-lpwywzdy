@@ -6,7 +6,8 @@ import styles from './Pierogarania.module.css';
 
 interface PierogThumbnailProps {
    pierog: PierogObject;
-   databaseSetter?: React.Dispatch<React.SetStateAction<PierogObject[]>>
+   databaseSetter?: React.Dispatch<React.SetStateAction<PierogObject[]>>;
+   allDatabaseSetter: React.Dispatch<React.SetStateAction<PierogObject[]>>;
    editable: boolean;
    displayedPierogiSettings: {
       displayedPierog: PierogData;
@@ -16,24 +17,31 @@ interface PierogThumbnailProps {
 }
 
 const PierogThumbnail = (props: PierogThumbnailProps) => {
-    const setMyPierogiDatabase = props.databaseSetter;
+   const setMyPierogiDatabase = props.databaseSetter;
 
    const onOpenPierog = () => {
-      props.displayedPierogiSettings.setDisplayedPierog(props.pierog)
-      props.displayedPierogiSettings.setIsDisplayingPierog(true)
+      props.displayedPierogiSettings.setDisplayedPierog(props.pierog);
+      props.displayedPierogiSettings.setIsDisplayingPierog(true);
    };
 
    const onDeletePierog = async () => {
-    await deleteMyPierog(props.pierog._id)
-    setMyPierogiDatabase && setMyPierogiDatabase((prevDatabase) =>
-      prevDatabase.filter((pierog) => pierog._id !== props.pierog._id)
-    );
+      await deleteMyPierog(props.pierog._id);
+      setMyPierogiDatabase &&
+         setMyPierogiDatabase((prevDatabase) =>
+            prevDatabase.filter((pierog) => pierog._id !== props.pierog._id),
+         );
 
+      props.allDatabaseSetter &&
+         props.allDatabaseSetter((prevDatabase) =>
+            prevDatabase.filter((pierog) => pierog._id !== props.pierog._id),
+         );
    };
 
-
    return (
-      <div className={styles.singleThumbWrapper} onClick={!props.editable ? onOpenPierog : ()=>{}}>
+      <div
+         className={styles.singleThumbWrapper}
+         onClick={!props.editable ? onOpenPierog : () => {}}
+      >
          <img
             src={props.pierog.imageSrc}
             alt={'Wygenerowany obrazk pierogów.'}
@@ -42,8 +50,12 @@ const PierogThumbnail = (props: PierogThumbnailProps) => {
          <h3 className={styles.thumbnailName}>{props.pierog.name}</h3>
          {props.editable && (
             <div className={styles.thumbnailButtonWrapper}>
-               <Button type={ButtonType.Secondary} onClick={onOpenPierog}>Otwórz</Button>
-               <Button type={ButtonType.Secondary} onClick={onDeletePierog}>Usuń</Button>
+               <Button type={ButtonType.Secondary} onClick={onOpenPierog}>
+                  Otwórz
+               </Button>
+               <Button type={ButtonType.Secondary} onClick={onDeletePierog}>
+                  Usuń
+               </Button>
             </div>
          )}
       </div>
