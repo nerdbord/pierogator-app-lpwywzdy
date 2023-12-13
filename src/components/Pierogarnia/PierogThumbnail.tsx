@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { deleteMyPierog } from '../../api/client';
 import { ButtonType, PierogObject } from '../../enums/enums';
 import { PierogData } from '../../interfaces';
@@ -39,7 +40,10 @@ const PierogThumbnail = (props: PierogThumbnailProps) => {
 
    return (
       <div
-         className={styles.singleThumbWrapper}
+         className={classNames(
+            styles.singleThumbWrapper,
+            !props.editable ? styles.cursorPointer : '',
+         )}
          onClick={!props.editable ? onOpenPierog : () => {}}
       >
          <img
