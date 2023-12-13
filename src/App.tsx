@@ -16,7 +16,11 @@ const App = () => {
             type={isCreatingNewPierog ? HeaderType.machine : HeaderType.store}
          ></HeaderBackground>
          <div className={styles.appWrapper}>
-         {isCreatingNewPierog ? <NewPierog newPierogToggleSet={setCreatingNewPierog} /> : <PierogarniaContainer newPierogToggleSet={setCreatingNewPierog} />}
+            {isCreatingNewPierog ? (
+               <NewPierog newPierogToggleSet={setCreatingNewPierog} />
+            ) : (
+               <PierogarniaContainer newPierogToggleSet={setCreatingNewPierog} />
+            )}
          </div>
       </div>
    );

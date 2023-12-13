@@ -182,8 +182,8 @@ const Recipe = (props: RecipeProps) => {
          setIsUploading(false);
       } catch (error) {
          console.log(error);
-      } finally{
-         props.newPierogToggleSet(false)
+      } finally {
+         props.newPierogToggleSet(false);
       }
    };
 

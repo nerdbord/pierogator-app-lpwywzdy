@@ -19,13 +19,12 @@ export enum IngredType {
    skladniki = 'Składniki',
 }
 
-
 export type Ingredient = {
    name: string;
    quantity: string;
- };
+};
 
-export  type PierogObject = {
+export type PierogObject = {
    author: string;
    imageSrc: string;
    name: string;
@@ -34,12 +33,11 @@ export  type PierogObject = {
    ingredients: {
       dough: Ingredient[];
       filling: Ingredient[];
-   }
+   };
    instructions: {
       dough_preparation: string[];
       filling_preparation: string[];
       forming_and_cooking_dumplings: string[];
       serving: string[];
-   }
-
- }
+   };
+};

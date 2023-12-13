@@ -29,8 +29,8 @@ interface NewPierogProps {
 }
 
 const NewPierog = (props: NewPierogProps) => {
-   const [doughValue, setDoughValue] = useState("");
-   const [fillingValue, setFillingValue] = useState( '');
+   const [doughValue, setDoughValue] = useState('');
+   const [fillingValue, setFillingValue] = useState('');
    const [ingredsValue, setIngredsValue] = useState('');
    const [additonalInfoValue, setAdditionalInfoValue] = useState('');
    const [isGeneratingRecipe, setIsGeneratingRecipe] = useState(false);
@@ -55,9 +55,6 @@ const NewPierog = (props: NewPierogProps) => {
          additonalInfo: setAdditionalInfoValue,
       },
    };
-
-
-   
 
    const handleSave = () => {
       setIngredientStep(false);
