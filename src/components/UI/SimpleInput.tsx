@@ -5,37 +5,29 @@ import styles from './Input.module.css';
 import classNames from 'classnames';
 
 interface SimpleInputProps {
-    valueSettings: {
-        value: string;
-        setter: React.Dispatch<React.SetStateAction<string>>;
-     };
-     placeholder: string;
-     disabled?: boolean;
+   valueSettings: {
+      value: string;
+      setter: React.Dispatch<React.SetStateAction<string>>;
+   };
+   placeholder: string;
+   disabled?: boolean;
 }
 
 const SimpleInput = (props: SimpleInputProps) => {
    const localHandleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.valueSettings.setter(event.target.value)
+      props.valueSettings.setter(event.target.value);
    };
 
+   const simpleInputStyles = classNames(styles.inputStyle, styles.simpleInputStyle);
 
-   const simpleInputStyles = classNames(
-    styles.inputStyle,
-    styles.simpleInputStyle
-   )
-
-   const simpleWrapperStyles = classNames(
-    styles.inputWrapper,
-    styles.simpleWrapper,
-   )
-
+   const simpleWrapperStyles = classNames(styles.inputWrapper, styles.simpleWrapper);
 
    return (
       <div className={styles.inputTopWrapper}>
          <h3 className={styles.titleStyle}>Nazwa</h3>
          <div className={simpleWrapperStyles}>
             <input
-               type='text'
+               type="text"
                disabled={props.disabled}
                onChange={localHandleInput}
                className={simpleInputStyles}

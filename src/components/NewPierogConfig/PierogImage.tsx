@@ -24,7 +24,7 @@ interface PierogImageProps {
       };
    };
    editable: boolean;
-   setEdit?:  React.Dispatch<React.SetStateAction<boolean>>
+   setEdit?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PierogImage = (props: PierogImageProps) => {
@@ -48,11 +48,11 @@ const PierogImage = (props: PierogImageProps) => {
 
    const handleButtonClick = () => {
       if (props.editable) {
-         handleGenerate()
-      } else{
+         handleGenerate();
+      } else {
          props.setEdit && props.setEdit(true);
       }
-   }
+   };
 
    return (
       <>
@@ -62,15 +62,15 @@ const PierogImage = (props: PierogImageProps) => {
             </h2>
             <div className={styles.formHeaderButtonSection}>
                {isGenerating && <Loader />}
-               {(
+               {
                   <Button
                      type={ButtonType.Secondary}
                      onClick={handleButtonClick}
                      isDisabled={isGenerating}
                   >
-                     {props.editable ? "Generuj" : "Zmień"}
+                     {props.editable ? 'Generuj' : 'Zmień'}
                   </Button>
-               )}
+               }
             </div>
          </div>
          <section className={styles.imageSection}>

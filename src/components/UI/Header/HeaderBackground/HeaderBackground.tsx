@@ -8,8 +8,9 @@ interface HeaderProps {
 
 const HeaderBackground = (props: HeaderProps) => {
    return (
-      <header className={props.type === HeaderType.machine ? styles.machine : styles.store}>
-      </header>
+      <header
+         className={props.type === HeaderType.machine ? styles.machine : styles.store}
+      ></header>
    );
 };
 
