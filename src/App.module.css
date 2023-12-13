@@ -1,7 +1,7 @@
 .mainWrapper {
    max-width: 375px;
    width: 100%;
-   border: 1px salmon solid;
+   background-color: var(--color-white);
 }
 
 .appWrapper {

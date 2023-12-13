@@ -67,11 +67,13 @@ const PierogarniaContainer = (props: PierogarniaContainerProps) => {
                pierogiDatabase={myPierogiSettings}
                newPierogToggleSet={props.newPierogToggleSet}
                displayedPierogiSettings={displayedPierogSettings}
+               allDatabaseSetter={setAllPierogiDatabase}
             />
             <Pierogarnia
                pierogiDatabase={allPierogiDatabase}
                newPierogToggleSet={props.newPierogToggleSet}
                displayedPierogiSettings={displayedPierogSettings}
+               allDatabaseSetter={setAllPierogiDatabase}
             />
          </>
       );
