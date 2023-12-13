@@ -1,0 +1,74 @@
+.form {
+   padding: 18px 0 32px;
+}
+
+.formHeader {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin: 18px 0 24px;
+}
+
+.formHeaderDisplay {
+   display: flex;
+   flex-direction: row-reverse;
+   align-items: center;
+   justify-content: space-between;
+   margin: 18px 0 24px;
+}
+
+.formHeaderButtonSection {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 4px;
+}
+
+.imageSection {
+   max-width: 100%;
+   overflow: hidden;
+}
+
+.imageStyle {
+   border-radius: 4px;
+   min-width: 162px;
+
+   max-height: 110px;
+   width: 100%;
+   object-fit: cover;
+}
+
+.imageStyleDisplay{
+   border-radius: 4px;
+   width: 100%;
+}
+
+.thumbnailName {
+   line-height: 20px;
+}
+
+.nameStyle {
+   margin-top: 15px;
+   margin-bottom: 20px;
+}
+
+.singleThumbWrapper {
+   max-width: 162px;
+   margin-bottom: 20px;
+}
+
+.thumbnailWrapper {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+}
+
+.thumbnailButtonWrapper {
+   display: flex;
+   gap: 15px;
+}
+
+.h3 {
+   margin-top: 10px;
+   font-size: 16px;
+}

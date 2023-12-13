@@ -265,3 +265,65 @@ export const postMyPierog = async (newPierogSettings: PierogData) => {
       throw error;
    }
 };
+
+export const getAllPierogi = async () => {
+   const apiURL = 'https://training.nerdbord.io/api/v1/pierogator/dumpling-recipes';
+   return fetch(apiURL)
+      .then((response) => {
+         if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+         }
+         return response.json();
+      })
+      .catch((error) => {
+         console.error('Error fetching data:', error);
+      });
+};
+
+export const getMyPierogi = async () => {
+   const url = 'https://training.nerdbord.io/api/v1/pierogator/dumpling-recipes/me';
+
+   try {
+      const response = await fetch(url, {
+         method: 'GET',
+         headers: {
+            Authorization: nerdyApiToken,
+            'Content-Type': 'application/json',
+         },
+      });
+
+      if (!response.ok) {
+         throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      //////
+      const data = await response.json();
+      return data;
+   } catch (error) {
+      console.error('Error fetching dumpling recipe:', error);
+      throw error;
+   }
+};
+
+export const deleteMyPierog = async (id: string) => {
+   const url = `https://training.nerdbord.io/api/v1/pierogator/dumpling-recipes/${id}`;
+
+   fetch(url, {
+      method: 'DELETE',
+      headers: {
+         Authorization: nerdyApiToken,
+         'Content-Type': 'application/json',
+      },
+   })
+      .then((response) => {
+         if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+         }
+         return response.json();
+      })
+      .then((data) => {
+         console.log('Delete successful:', data);
+      })
+      .catch((error) => {
+         console.error('Error deleting recipe:', error);
+      });
+};

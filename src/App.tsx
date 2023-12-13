@@ -1,21 +1,22 @@
+import { useState } from 'react';
 import styles from './App.module.css';
 
 // components
 import HeaderBackground from './components/UI/Header/HeaderBackground/HeaderBackground';
 import NewPierog from './components/NewPierogConfig/NewPierog';
 import { HeaderType } from './enums/enums';
-import { useState } from 'react';
+import PierogarniaContainer from './components/Pierogarnia/PierogarniaContainer';
 
 const App = () => {
-   const [newPierogStep, setNewPierogStep] = useState(true);
+   const [isCreatingNewPierog, setCreatingNewPierog] = useState(false);
 
    return (
       <div className={styles.mainWrapper}>
          <HeaderBackground
-            type={newPierogStep ? HeaderType.machine : HeaderType.store}
+            type={isCreatingNewPierog ? HeaderType.machine : HeaderType.store}
          ></HeaderBackground>
          <div className={styles.appWrapper}>
-            <NewPierog />
+         {isCreatingNewPierog ? <NewPierog newPierogToggleSet={setCreatingNewPierog} /> : <PierogarniaContainer newPierogToggleSet={setCreatingNewPierog} />}
          </div>
       </div>
    );
