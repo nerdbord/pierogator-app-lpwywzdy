@@ -7,13 +7,34 @@ import PierogImage from './PierogImage';
 import Recipe from './Recipe';
 import Button from '../UI/Button';
 import { ButtonType } from '../../enums/enums';
+import { PierogData } from '../../interfaces';
+
+const initialPierogData: PierogData = {
+   name: '',
+   imageSrc: '',
+   ingredients: {
+      dough: [],
+      filling: [],
+   },
+   instructions: {
+      dough_preparation: [],
+      filling_preparation: [],
+      forming_and_cooking_dumplings: [],
+      serving: [],
+   },
+};
 
 const NewPierog = () => {
    const [doughValue, setDoughValue] = useState('');
    const [fillingValue, setFillingValue] = useState('');
    const [ingredsValue, setIngredsValue] = useState('');
-   const [pierogName, setPierogName] = useState('');
-   const [imageData, setImageData] = useState('');
+   const [additonalInfoValue, setAdditionalInfoValue] = useState('');
+   const [isGeneratingRecipe, setIsGeneratingRecipe] = useState(false);
+   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+   const [isGeneratingIngredients, setIsGeneratingIngredients] = useState(false);
+
+   const [newPierogData, setNewPierogData] = useState<PierogData>(initialPierogData);
+
    const [ingredientStep, setIngredientStep] = useState(true);
 
    const stateProps = {
@@ -21,17 +42,14 @@ const NewPierog = () => {
          dough: doughValue,
          filling: fillingValue,
          ingreds: ingredsValue,
+         additonalInfo: additonalInfoValue,
       },
       setters: {
          dough: setDoughValue,
          filling: setFillingValue,
          ingreds: setIngredsValue,
+         additonalInfo: setAdditionalInfoValue,
       },
-   };
-
-   const nameAndImage = {
-      nameSettings: { value: pierogName, setter: setPierogName },
-      imageSettings: { value: imageData, setter: setImageData },
    };
 
    const handleSave = () => {
@@ -42,14 +60,31 @@ const NewPierog = () => {
       if (ingredientStep) {
          return (
             <>
-               <Ingredients inputValues={stateProps} />
+               <Ingredients
+                  inputValues={stateProps}
+                  isGeneratingIngredients={isGeneratingIngredients}
+                  setIsGeneratingIngredients={setIsGeneratingIngredients}
+                  isGeneratingImage={isGeneratingImage}
+               />
                <PierogImage
                   inputValues={stateProps.values}
-                  pierogSettings={nameAndImage}
+                  newPierogData={newPierogData}
+                  setNewPierogData={setNewPierogData}
                   editable={true}
+                  isGeneratingRecipe={isGeneratingRecipe}
+                  isGeneratingIngredients={isGeneratingIngredients}
+                  isGeneratingImage={isGeneratingImage}
+                  setIsGeneratingImage={setIsGeneratingImage}
                />
-               {pierogName && (
-                  <Button type={ButtonType.Primary} onClick={handleSave}>
+
+               {newPierogData.imageSrc && (
+                  <Button
+                     isDisabled={
+                        !newPierogData.name.trim() || isGeneratingImage || isGeneratingIngredients
+                     }
+                     type={ButtonType.Primary}
+                     onClick={handleSave}
+                  >
                      Zapisz i przejdź do tworzenia przepisu
                   </Button>
                )}
@@ -60,17 +95,32 @@ const NewPierog = () => {
             <>
                <PierogImage
                   inputValues={stateProps.values}
-                  pierogSettings={nameAndImage}
+                  newPierogData={newPierogData}
+                  setNewPierogData={setNewPierogData}
                   editable={false}
                   setEdit={setIngredientStep}
+                  isGeneratingRecipe={isGeneratingRecipe}
+                  isGeneratingIngredients={isGeneratingIngredients}
+                  isGeneratingImage={isGeneratingImage}
+                  setIsGeneratingImage={setIsGeneratingImage}
                />
-               <Recipe inputValues={stateProps.values} nameSettings={nameAndImage.nameSettings} />
+               <Recipe
+                  inputValues={stateProps}
+                  newPierogSetter={setNewPierogData}
+                  newPierogSettings={newPierogData}
+                  isGeneratingRecipe={isGeneratingRecipe}
+                  setIsGeneratingRecipe={setIsGeneratingRecipe}
+               />
             </>
          );
       }
    };
 
-   return <div className={styles.form}>{stepChanger()}</div>;
+   return (
+      <>
+         <div className={styles.form}>{stepChanger()}</div>
+      </>
+   );
 };
 
 export default NewPierog;
