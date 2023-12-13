@@ -4,6 +4,7 @@ import Button from '../UI/Button';
 import DumplingIcon from '../icons/DumplingIcon';
 import PierogThumbnail from './PierogThumbnail';
 import styles from './Pierogarania.module.css';
+import { PierogData } from '../../interfaces';
 
 interface UserPierogiProps {
    pierogiDatabase: {
@@ -11,11 +12,16 @@ interface UserPierogiProps {
       setMyPierogiDatabase: React.Dispatch<React.SetStateAction<PierogObject[]>>;
    };
    newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
+   displayedPierogiSettings: {
+      displayedPierog: PierogData;
+      setDisplayedPierog: React.Dispatch<React.SetStateAction<PierogData>>;
+      setIsDisplayingPierog: React.Dispatch<React.SetStateAction<boolean>>;
+   };
 }
 
 const UserPierogi = (props: UserPierogiProps) => {
-    const pierogiDatabase = props.pierogiDatabase.myPierogiDatabase;
-    const pierogiDatabaseSetter = props.pierogiDatabase.setMyPierogiDatabase;
+   const pierogiDatabase = props.pierogiDatabase.myPierogiDatabase;
+   const pierogiDatabaseSetter = props.pierogiDatabase.setMyPierogiDatabase;
 
    return (
       <>
@@ -35,7 +41,15 @@ const UserPierogi = (props: UserPierogiProps) => {
          <div className={styles.thumbnailWrapper}>
             {pierogiDatabase &&
                pierogiDatabase.map((pierog, i) => {
-                  return <PierogThumbnail pierog={pierog} editable={true} key={i} databaseSetter={pierogiDatabaseSetter} />;
+                  return (
+                     <PierogThumbnail
+                        pierog={pierog}
+                        editable={true}
+                        key={i}
+                        databaseSetter={pierogiDatabaseSetter}
+                        displayedPierogiSettings={props.displayedPierogiSettings}
+                     />
+                  );
                })}
          </div>
       </>

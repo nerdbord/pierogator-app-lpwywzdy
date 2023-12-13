@@ -8,7 +8,7 @@ import { HeaderType } from './enums/enums';
 import PierogarniaContainer from './components/Pierogarnia/PierogarniaContainer';
 
 const App = () => {
-   const [isCreatingNewPierog, setCreatingNewPierog] = useState(true);
+   const [isCreatingNewPierog, setCreatingNewPierog] = useState(false);
 
    return (
       <div className={styles.mainWrapper}>

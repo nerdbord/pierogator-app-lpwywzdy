@@ -4,6 +4,23 @@ import { useEffect, useState } from 'react';
 import { getAllPierogi, getMyPierogi } from '../../api/client';
 import UserPierogi from './UserPierogi';
 import { PierogObject } from '../../enums/enums';
+import { PierogData } from '../../interfaces';
+import PierogDetails from './PierogDetails';
+
+const initialPierogData: PierogData = {
+   name: '',
+   imageSrc: '',
+   ingredients: {
+      dough: [],
+      filling: [],
+   },
+   instructions: {
+      dough_preparation: [],
+      filling_preparation: [],
+      forming_and_cooking_dumplings: [],
+      serving: [],
+   },
+};
 
 interface PierogarniaContainerProps {
    newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,11 +29,15 @@ interface PierogarniaContainerProps {
 const PierogarniaContainer = (props: PierogarniaContainerProps) => {
    const [allPierogiDatabase, setAllPierogiDatabase] = useState<PierogObject[]>([]);
    const [myPierogiDatabase, setMyPierogiDatabase] = useState<PierogObject[]>([]);
-   const [pierogarniaRefresher, refreshPierogarnia] = useState(false);
+   const [isDisplayingPierog, setIsDisplayingPierog] = useState(false);
+   const [displayedPierog, setDisplayedPierog] = useState<PierogData>(initialPierogData);
+
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
 
    const myPierogiSettings = { myPierogiDatabase, setMyPierogiDatabase };
+   const displayedPierogSettings = { displayedPierog, setDisplayedPierog, setIsDisplayingPierog };
+
    useEffect(() => {
       const fetchData = async () => {
          try {
@@ -37,18 +58,24 @@ const PierogarniaContainer = (props: PierogarniaContainerProps) => {
       fetchData();
    }, []);
 
-   return (
-      <>
-         <UserPierogi
-            pierogiDatabase={myPierogiSettings}
-            newPierogToggleSet={props.newPierogToggleSet}
-         />
-         <Pierogarnia
-            pierogiDatabase={allPierogiDatabase}
-            newPierogToggleSet={props.newPierogToggleSet}
-         />
-      </>
-   );
+   if (isDisplayingPierog) {
+      return <PierogDetails displayedPierogiSettings={displayedPierogSettings} />;
+   } else {
+      return (
+         <>
+            <UserPierogi
+               pierogiDatabase={myPierogiSettings}
+               newPierogToggleSet={props.newPierogToggleSet}
+               displayedPierogiSettings={displayedPierogSettings}
+            />
+            <Pierogarnia
+               pierogiDatabase={allPierogiDatabase}
+               newPierogToggleSet={props.newPierogToggleSet}
+               displayedPierogiSettings={displayedPierogSettings}
+            />
+         </>
+      );
+   }
 };
 
 export default PierogarniaContainer;

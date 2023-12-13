@@ -1,18 +1,20 @@
-
 import { PierogObject } from '../../enums/enums';
+import { PierogData } from '../../interfaces';
 import DumplingIcon from '../icons/DumplingIcon';
 import PierogThumbnail from './PierogThumbnail';
 import styles from './Pierogarania.module.css';
 
 interface PierogarniaProps {
-    pierogiDatabase: PierogObject[];
-    newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
+   pierogiDatabase: PierogObject[];
+   newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
+   displayedPierogiSettings: {
+      displayedPierog: PierogData;
+      setDisplayedPierog: React.Dispatch<React.SetStateAction<PierogData>>;
+      setIsDisplayingPierog: React.Dispatch<React.SetStateAction<boolean>>;
+   };
 }
 
 const Pierogarnia = (props: PierogarniaProps) => {
-
-
-
    return (
       <>
          <div className={styles.formHeader}>
@@ -20,11 +22,12 @@ const Pierogarnia = (props: PierogarniaProps) => {
                <DumplingIcon /> Pierogarnia {}
             </h2>
          </div>
-        <div className={styles.thumbnailWrapper}>
-            {props.pierogiDatabase && props.pierogiDatabase.map((pierog, i) => {
-                return (<PierogThumbnail pierog={pierog} editable={false} key={i}/>)
-            })}
-        </div>
+         <div className={styles.thumbnailWrapper}>
+            {props.pierogiDatabase &&
+               props.pierogiDatabase.map((pierog, i) => {
+                  return <PierogThumbnail pierog={pierog} editable={false} key={i} displayedPierogiSettings={props.displayedPierogiSettings} />;
+               })}
+         </div>
       </>
    );
 };

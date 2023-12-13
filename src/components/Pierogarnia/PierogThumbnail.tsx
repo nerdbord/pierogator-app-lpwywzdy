@@ -1,5 +1,6 @@
 import { deleteMyPierog } from '../../api/client';
 import { ButtonType, PierogObject } from '../../enums/enums';
+import { PierogData } from '../../interfaces';
 import Button from '../UI/Button';
 import styles from './Pierogarania.module.css';
 
@@ -7,13 +8,19 @@ interface PierogThumbnailProps {
    pierog: PierogObject;
    databaseSetter?: React.Dispatch<React.SetStateAction<PierogObject[]>>
    editable: boolean;
+   displayedPierogiSettings: {
+      displayedPierog: PierogData;
+      setDisplayedPierog: React.Dispatch<React.SetStateAction<PierogData>>;
+      setIsDisplayingPierog: React.Dispatch<React.SetStateAction<boolean>>;
+   };
 }
 
 const PierogThumbnail = (props: PierogThumbnailProps) => {
     const setMyPierogiDatabase = props.databaseSetter;
 
    const onOpenPierog = () => {
-
+      props.displayedPierogiSettings.setDisplayedPierog(props.pierog)
+      props.displayedPierogiSettings.setIsDisplayingPierog(true)
    };
 
    const onDeletePierog = async () => {
