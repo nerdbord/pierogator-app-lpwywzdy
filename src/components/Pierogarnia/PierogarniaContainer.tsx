@@ -1,5 +1,4 @@
 import Pierogarnia from './Pierogarnia';
-import styles from './Pierogarania.module.css';
 import { useEffect, useState } from 'react';
 import { getAllPierogi, getMyPierogi } from '../../api/client';
 import UserPierogi from './UserPierogi';
@@ -32,9 +31,6 @@ const PierogarniaContainer = (props: PierogarniaContainerProps) => {
    const [isDisplayingPierog, setIsDisplayingPierog] = useState(false);
    const [displayedPierog, setDisplayedPierog] = useState<PierogData>(initialPierogData);
 
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState<string | null>(null);
-
    const myPierogiSettings = { myPierogiDatabase, setMyPierogiDatabase };
    const displayedPierogSettings = { displayedPierog, setDisplayedPierog, setIsDisplayingPierog };
 
@@ -47,11 +43,8 @@ const PierogarniaContainer = (props: PierogarniaContainerProps) => {
 
             const myData = await getMyPierogi();
             setMyPierogiDatabase(myData);
-
-            setLoading(false);
          } catch (error) {
-            setError('Error fetching data.');
-            setLoading(false);
+            console.error(error);
          }
       };
 

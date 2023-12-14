@@ -22,6 +22,7 @@ interface PierogImageProps {
    isGeneratingIngredients: boolean;
    isGeneratingImage: boolean;
    setIsGeneratingImage: React.Dispatch<React.SetStateAction<boolean>>;
+   isUploadingPierog: boolean;
 }
 
 const PierogImage = (props: PierogImageProps) => {
@@ -66,7 +67,8 @@ const PierogImage = (props: PierogImageProps) => {
                      isDisabled={
                         props.isGeneratingIngredients ||
                         props.isGeneratingImage ||
-                        props.isGeneratingRecipe
+                        props.isGeneratingRecipe ||
+                        props.isUploadingPierog
                      }
                   >
                      {props.editable ? 'Generuj' : 'Zmień'}
@@ -89,7 +91,13 @@ const PierogImage = (props: PierogImageProps) => {
                   pierogSettings={props.newPierogData}
                   pierogSetters={props.setNewPierogData}
                   placeholder="wpisz nazwę pieroga"
-                  disabled={!props.editable}
+                  disabled={
+                     !props.editable ||
+                     props.isGeneratingImage ||
+                     props.isGeneratingIngredients ||
+                     props.isGeneratingRecipe ||
+                     props.isUploadingPierog
+                  }
                />
             )}
          </section>

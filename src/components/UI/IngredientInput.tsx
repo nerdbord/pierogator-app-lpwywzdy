@@ -9,6 +9,7 @@ interface InputProps {
    displayValue: string;
    isLocked: boolean;
    setLocked: React.Dispatch<React.SetStateAction<boolean>>;
+   disabled: boolean;
    handleInput: (event: React.ChangeEvent<HTMLTextAreaElement>, ingredientName: IngredType) => void;
 }
 
@@ -51,7 +52,7 @@ const IngredientInput = (props: InputProps) => {
                ref={inputRef}
                onChange={localHandleInput}
                className={styles.inputStyle}
-               disabled={props.isLocked}
+               disabled={props.isLocked || props.disabled}
                value={props.displayValue}
                placeholder={'wpisz, wygeneruj lub zostaw puste'}
             />

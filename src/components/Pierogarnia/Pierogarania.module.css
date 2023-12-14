@@ -6,7 +6,7 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
-   margin: 18px 0 24px;
+   margin: 18px 0 16px;
 }
 
 .formHeaderDisplay {
@@ -38,13 +38,14 @@
    object-fit: cover;
 }
 
-.imageStyleDisplay{
+.imageStyleDisplay {
    border-radius: 4px;
    width: 100%;
 }
 
 .thumbnailName {
    line-height: 20px;
+   padding: 2px 0 0;
 }
 
 .nameStyle {
@@ -54,21 +55,29 @@
 
 .singleThumbWrapper {
    max-width: 162px;
-   margin-bottom: 20px;
+   /* margin-bottom: 20px; */
 }
 
 .thumbnailWrapper {
    display: flex;
    flex-wrap: wrap;
    justify-content: space-between;
+   /* column-gap: 20px; */
+   row-gap: 20px;
+   margin-bottom: 32px;
 }
 
 .thumbnailButtonWrapper {
    display: flex;
-   gap: 15px;
+   gap: 8px;
+   margin-top: 8px;
 }
 
 .h3 {
    margin-top: 10px;
    font-size: 16px;
+}
+
+.cursorPointer {
+   cursor: pointer;
 }
