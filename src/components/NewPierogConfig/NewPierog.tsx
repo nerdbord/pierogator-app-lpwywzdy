@@ -24,11 +24,7 @@ const initialPierogData: PierogData = {
    },
 };
 
-interface NewPierogProps {
-   // newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const NewPierog = (props: NewPierogProps) => {
+const NewPierog = () => {
    const [doughValue, setDoughValue] = useState('');
    const [fillingValue, setFillingValue] = useState('');
    const [ingredsValue, setIngredsValue] = useState('');
