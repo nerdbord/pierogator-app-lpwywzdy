@@ -6,7 +6,6 @@ import styles from './Pierogarania.module.css';
 
 interface PierogarniaProps {
    pierogiDatabase: PierogObject[];
-   newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
    displayedPierogiSettings: {
       displayedPierog: PierogData;
       setDisplayedPierog: React.Dispatch<React.SetStateAction<PierogData>>;

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import styles from './App.module.css';
 
 // components
@@ -7,20 +8,23 @@ import NewPierog from './components/NewPierogConfig/NewPierog';
 import { HeaderType } from './enums/enums';
 import PierogarniaContainer from './components/Pierogarnia/PierogarniaContainer';
 
-const App = () => {
-   const [isCreatingNewPierog, setCreatingNewPierog] = useState(true);
+const router = createBrowserRouter([
+   {
+      path: '/',
+      element: <PierogarniaContainer />,
+   },
+   {
+      path: '/create-pierog',
+      element: <NewPierog />,
+   },
+]);
 
+const App = () => {
    return (
       <div className={styles.mainWrapper}>
-         <HeaderBackground
-            type={isCreatingNewPierog ? HeaderType.machine : HeaderType.store}
-         ></HeaderBackground>
+         <HeaderBackground type={HeaderType.machine}></HeaderBackground>
          <div className={styles.appWrapper}>
-            {isCreatingNewPierog ? (
-               <NewPierog newPierogToggleSet={setCreatingNewPierog} />
-            ) : (
-               <PierogarniaContainer newPierogToggleSet={setCreatingNewPierog} />
-            )}
+            <RouterProvider router={router} />
          </div>
       </div>
    );

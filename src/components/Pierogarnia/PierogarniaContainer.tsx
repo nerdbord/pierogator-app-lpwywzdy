@@ -21,11 +21,7 @@ const initialPierogData: PierogData = {
    },
 };
 
-interface PierogarniaContainerProps {
-   newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const PierogarniaContainer = (props: PierogarniaContainerProps) => {
+const PierogarniaContainer = () => {
    const [allPierogiDatabase, setAllPierogiDatabase] = useState<PierogObject[]>([]);
    const [myPierogiDatabase, setMyPierogiDatabase] = useState<PierogObject[]>([]);
    const [isDisplayingPierog, setIsDisplayingPierog] = useState(false);
@@ -58,13 +54,11 @@ const PierogarniaContainer = (props: PierogarniaContainerProps) => {
          <>
             <UserPierogi
                pierogiDatabase={myPierogiSettings}
-               newPierogToggleSet={props.newPierogToggleSet}
                displayedPierogiSettings={displayedPierogSettings}
                allDatabaseSetter={setAllPierogiDatabase}
             />
             <Pierogarnia
                pierogiDatabase={allPierogiDatabase}
-               newPierogToggleSet={props.newPierogToggleSet}
                displayedPierogiSettings={displayedPierogSettings}
                allDatabaseSetter={setAllPierogiDatabase}
             />

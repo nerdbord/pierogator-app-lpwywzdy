@@ -4,13 +4,13 @@ import DumplingIcon from '../icons/DumplingIcon';
 import PierogThumbnail from './PierogThumbnail';
 import styles from './Pierogarania.module.css';
 import { PierogData } from '../../interfaces';
+import { Link } from 'react-router-dom';
 
 interface UserPierogiProps {
    pierogiDatabase: {
       myPierogiDatabase: PierogObject[];
       setMyPierogiDatabase: React.Dispatch<React.SetStateAction<PierogObject[]>>;
    };
-   newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
    displayedPierogiSettings: {
       displayedPierog: PierogData;
       setDisplayedPierog: React.Dispatch<React.SetStateAction<PierogData>>;
@@ -29,14 +29,9 @@ const UserPierogi = (props: UserPierogiProps) => {
             <h2>
                <DumplingIcon /> Moje pierogi
             </h2>
-            <Button
-               type={ButtonType.Secondary}
-               onClick={() => {
-                  props.newPierogToggleSet(true);
-               }}
-            >
-               Nowy pieróg
-            </Button>
+            <Link to="/create-pierog">
+               <Button type={ButtonType.Secondary}>Nowy pieróg</Button>
+            </Link>
          </div>
          <div className={styles.thumbnailWrapper}>
             {pierogiDatabase &&

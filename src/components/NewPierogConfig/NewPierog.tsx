@@ -25,7 +25,7 @@ const initialPierogData: PierogData = {
 };
 
 interface NewPierogProps {
-   newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
+   // newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const NewPierog = (props: NewPierogProps) => {
@@ -117,7 +117,6 @@ const NewPierog = (props: NewPierogProps) => {
                   newPierogSettings={newPierogData}
                   isGeneratingRecipe={isGeneratingRecipe}
                   setIsGeneratingRecipe={setIsGeneratingRecipe}
-                  newPierogToggleSet={props.newPierogToggleSet}
                   isUploadingPierog={isUploadingPierog}
                   setIsUploadingPierog={setIsUploadingPierog}
                />
