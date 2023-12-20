@@ -38,7 +38,6 @@ interface RecipeProps {
    newPierogSetter: React.Dispatch<React.SetStateAction<PierogData>>;
    isGeneratingRecipe: boolean;
    setIsGeneratingRecipe: React.Dispatch<React.SetStateAction<boolean>>;
-   newPierogToggleSet: React.Dispatch<React.SetStateAction<boolean>>;
    isUploadingPierog: boolean;
    setIsUploadingPierog: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -185,7 +184,6 @@ const Recipe = (props: RecipeProps) => {
       } catch (error) {
          console.log(error);
       } finally {
-         props.newPierogToggleSet(false);
       }
    };
 
